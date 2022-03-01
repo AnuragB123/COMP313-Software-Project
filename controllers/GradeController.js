@@ -57,7 +57,7 @@ module.exports.updateGrade = (req, res, next) => {
 
   // function to insert Grade into DB
 module.exports.addGrade= (req, res, next) => {
-    Contact
+    
     let newgrade = Grade({
       userid: req.body.userid,
       courseName: req.body.courseName,
