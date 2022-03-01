@@ -5,6 +5,7 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let cors = require('cors');
 
+
 // database setup
 let mongoose = require('mongoose');
 let DB = require('./db');
@@ -20,6 +21,10 @@ mongoDB.once('open', ()=>{
 
 
 let app = express();
+
+//views setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
