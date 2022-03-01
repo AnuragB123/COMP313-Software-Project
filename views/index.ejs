@@ -4,9 +4,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <script defer src="javascript/index.js"></script>
 </head>
 <body>
-   <h1>This is HTML</h1>
+    <div class="topnav">
+        <a class="active" href="#login">Login</a>
+        <a href="#profile">Profile</a>
+        <a href="#checklist">Checklist</a>
+        <a href="#calendar">Calendar</a>
+        <a href="#tutor">Tutor</a>
+    </div>
+    <h1>Welcome to All In One Study Application</h1>
+    <img src="images/logo.jfif" height="100">
+    <main id="main-holder">
+        <h1 id="login-header">Login</h1>
+        <div id="login-error-msg-holder">
+            <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
+        </div>
+        <form id="login-form" onsubmit="#profile">
+            <select id="userType">
+                <option value="userType">Select User Type:</option>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+            </select>
+            <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username">
+            <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+            <input type="submit" value="Login" id="login-form-submit">
+            Don't Have An Account?
+            <a href="views/register.ejs" class="text-warning">Sign Up</a>
+        </form>
+        <br></br>
+        <div>
+            This Application will help Students and Teachers to stay organized in their studies and teachers
+        </div>
+    </main>
 </body>
 </html>
+
+<!--The Information User Inputs Saves into Database (POST Request) on Submit
+    Redirect to Signup Page -->

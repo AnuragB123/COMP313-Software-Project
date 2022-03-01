@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="offset-md-3 col-md-6 col-sm-12">
+          <div class="login" id="contentArea">
+              <h2>Register</h2>
+  
+              <% if(messages.length > 0) { %>
+                <div id="messageArea" class="alert alert-danger">
+                  <%= messages %>
+                </div>
+              <% } %>
+  
+              <form method="POST" id="registerForm" novalidate>
+                <p class="hint-text">Create your own account. It's free and only takes a minute.</p>
+                <p class="lead"><i class="fas fa-user-shield"></i> Personal Information</p>
+                
+                <div class="row text-center mt-2">
+                    <div class="col-lg-4 col-4">Type of User ?</div>
+                    <div class="col-lg-1 col-1">Student</div>
+                    <div class="col-lg-2 col-2"><input type="radio" name="isowner" value="student" id="student" required></div>
+                    <div class="col-lg-1 col-1">Teacher</div>
+                    <div class="col-lg-2 col-2"><input type="radio" name="isowner" value="teacher" id="teacher" required></div>
+                  </div>
+  
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="email" class="form-control" id="emailAddress" name="emailAddress"
+                    value="" placeholder="Email Address" required>
+                  </div>
+
+                  <div class="col-md-12">
+                    <input type="phone" class="form-control" id="phone" name="phone"
+                    value="" placeholder="Phone Number" required>
+                  </div>
+                </div>
+  
+                
+                <p class="lead"><i class="fas fa-database"></i>System Identification</p>
+                
+                <div class="row">              
+                    <div class="col-md-12">
+                      <input type="text" class="form-control" id="UserID" name="UserID"  
+                      value="" placeholder="UserID" required>
+                    </div>
+                  </div>
+
+                <div class="row">              
+                  <div class="col-md-12">
+                    <input type="text" class="form-control" id="username" name="username"  
+                    value="" placeholder="username" required>
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-lg-6 col-md-6">
+                    <input type="password" class="form-control" id="password" name="password"
+                    value="" placeholder="Password" required>
+                  </div>
+  
+                   <div class="col-lg-6 col-md-6">
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                    value="" placeholder="Confirm Password" required>
+                  </div>
+                </div>        
+                 
+                                                    
+                <div class="text-end">
+                  <button id="submitButton" type="submit" class="btn btn-primary">Register</button>
+                  <button id="cancelButton" type="reset" class="btn btn-warning"><i class="fas fa-undo fa-lg"></i> Reset</button>
+                </div>
+  
+                
+               <p class="text-center text-white small">
+                Already have an account? 
+                <a href="#index" class="text-warning">Sign in</a>
+              </p>
+              </form>
+             
+          </div>
+        
+    </div>
+  </div>
