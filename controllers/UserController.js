@@ -37,9 +37,15 @@ module.exports.findUser= (req, res, next) => {
           }}).then(result => {
         res.status(200).json({ message: "User Update successful!"});
       });
+<<<<<<< Updated upstream
   }
 
   // function to insert User into DB
+=======
+    }
+    
+     // function to insert User into DB
+>>>>>>> Stashed changes
 module.exports.addUser= (req, res, next) => {
   
   let newuser = Users({
@@ -63,4 +69,8 @@ module.exports.addUser= (req, res, next) => {
     }
 });
 
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
