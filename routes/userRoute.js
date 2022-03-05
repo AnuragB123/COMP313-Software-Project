@@ -4,10 +4,10 @@ var express = require('express');
 var router = express.Router();
 
 module.exports = function (app) {
-    app.post('/', users.Create); //Create Method in Controller must be created
+    app.post('/', users.addUser);
     //Users parameterized routes
     app.route('/users/:userId')
-    .get(users.read) //Read Method in Controller must be created
+    .get(users.findUser)
 
     app.params('userId', users.userById) //Show Specific User Controller Function must be created
 
