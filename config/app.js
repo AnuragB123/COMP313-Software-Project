@@ -4,6 +4,9 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let cors = require('cors');
+var passport = require('passport');
+var indexRouter = require('../routes/indexRoute')
+//var userRouter = require('../routes/userRoute');
 
 
 // database setup
@@ -31,6 +34,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
+//app.use(passport.authenticate('MongoDB Connection'));
+
+//Routes
+app.use('/', indexRouter)
+//app.use('/signup', userRouter)
+
 
 app.use(cors());
 
