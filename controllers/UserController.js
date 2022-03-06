@@ -41,9 +41,6 @@ module.exports.findUser= (req, res, next) => {
   }
 
   // function to insert User into DB
-    
-    
-     // function to insert User into DB
 module.exports.addUser= (req, res, next) => {
   
   let newuser = Users({
@@ -68,4 +65,6 @@ module.exports.addUser= (req, res, next) => {
 });
 
 }
+
+//Function to sign out the user
 

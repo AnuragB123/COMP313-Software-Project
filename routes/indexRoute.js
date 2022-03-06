@@ -15,4 +15,6 @@ module.exports = function (app) {
 
     app.get('/profile',users.profile) //Redirect to Profile Page Function in Controller must be created
 
+    //Passport Authentication methods
+
 }
