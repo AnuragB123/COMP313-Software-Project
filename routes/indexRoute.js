@@ -5,11 +5,8 @@ var router = express.Router();
 var db = require('../config/db')
 var passport = require('passport')
 
-module.exports = function (app) {
-    //Routing to index (login page)
-    app.get('/index', users.findUser())
-    //Routing to register page
-    app.post('/register', users.addUser())
-}
+router.get('/index', users.findUser())
 
-module.exports = app;
+router.post('/register', users.addUser())
+
+module.exports = router;
