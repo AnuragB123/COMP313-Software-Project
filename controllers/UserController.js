@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
+const passport = require('passport')
 
 // create a reference to the model
 let Users = require('../models/user');
@@ -62,6 +63,12 @@ module.exports.addUser= (req, res, next) => {
     {
       res.status(200).json({success: true, msg: 'Successfully added newuser'});
     }
+    passport.authenticate('local-signup', {
+      successRedirect: '/profile',
+      failureRedirect: '/index', 
+      failureFlash: true
+    })
+
 });
 
 }

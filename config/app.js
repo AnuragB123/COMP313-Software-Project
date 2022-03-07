@@ -34,11 +34,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
-//app.use(passport.authenticate('MongoDB Connection'));
+app.use(session({
+  "Secret": 'SomeSecret',
+  resave: false,
+  saveUnitialized: false
+})); //session secret
 
-//Routes
-app.use('/', indexRouter)
-//app.use('/signup', userRouter)
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(flash());
+
+app.get('/', (req, res) => {
+  res.render('views/index.ejs')
+})
 
 //Error handling
 app.use(function(req, res, next) {
@@ -55,7 +64,9 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
 app.use(cors());
 
+app.listen(3000, () => {
+  console.log('listening on port 3000');
+})
 module.exports = app;
