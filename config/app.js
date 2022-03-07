@@ -49,6 +49,10 @@ app.get('/', (req, res) => {
   res.render('views/index.ejs')
 })
 
+app.get('/register', (req, res) => {
+  res.render('views/register.ejs')
+})
+
 //Error handling
 app.use(function(req, res, next) {
   next(createError(404));
