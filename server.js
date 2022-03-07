@@ -25,7 +25,7 @@ const normalizePort = val => {
     const bind = typeof port === "string" ? "pipe " + port : "port " + port;
     switch (error.code) {
       case "EACCES":
-        console.error(bind + " requires elevated privileges");
+        console.error(bind + " elevated privileges");
         process.exit(1);
         break;
       case "EADDRINUSE":
