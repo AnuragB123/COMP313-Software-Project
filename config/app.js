@@ -39,10 +39,12 @@ app.use(express.static(path.join(__dirname, 'node_modules')));
 
 app.use('/', indexRouter)
 
+/*
 //Error handling
 app.use(function(req, res, next) {
   next(createError(404));
 });
+*/
 
 app.use(cors());
 
