@@ -5,8 +5,8 @@ var router = express.Router();
 var db = require('../config/db')
 var passport = require('passport')
 
-router.get('/index', users.findUser())
+router.get('/index', users.findUser)
 
-router.post('/register', users.addUser())
+router.post('/register', users.addUser)
 
 module.exports = router;

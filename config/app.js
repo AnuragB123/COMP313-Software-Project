@@ -6,6 +6,7 @@ let cookieParser = require('cookie-parser');
 let cors = require('cors');
 var passport = require('passport');
 var indexRouter = require('../routes/indexRoute')
+var flash = require('flash')
 //var userRouter = require('../routes/userRoute');
 
 
@@ -34,43 +35,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
-app.use(session({
-  "Secret": 'SomeSecret',
-  resave: false,
-  saveUnitialized: false
-})); //session secret
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use(flash());
-
-app.get('/', (req, res) => {
-  res.render('views/index.ejs')
-})
-
-app.get('/register', (req, res) => {
-  res.render('views/register.ejs')
-})
+app.use('/', indexRouter)
 
 //Error handling
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
 app.use(cors());
 
-app.listen(3000, () => {
-  console.log('listening on port 3000');
+app.listen(3001, () => {
+  console.log('listening on port 3001');
 })
 module.exports = app;
