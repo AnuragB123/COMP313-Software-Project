@@ -8,7 +8,7 @@ let Users = require('../models/user');
 
 //-----------------------------------------------------User operations---------------------------------------------------------
 module.exports.findUser= (req, res, next) => {
-    let email = req.params.email;
+    let email = req.body.email;
 
     Users.find({email : email},(err, usersList) => {
       if(err)
