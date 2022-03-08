@@ -30,9 +30,15 @@
 
             <label for="userName">User Name: </label>
             <input type="text" id="userName" name="userName">
+            <div class="invalid-feedback">
+                Username can not be empty.
+            </div>
 
             <label for="password">Password: </label>
-            <input type="password" id="password" name="password">
+            <input type="password" minlength="8" id="password" name="password">
+            <div class="invalid-feedback">
+                Minimum password length is 8.
+            </div>
         </form>
         <ul>
             <li><a href="/register">Sign Up, if you havent created an account</a></li>
