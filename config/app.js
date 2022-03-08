@@ -5,8 +5,9 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let cors = require('cors');
 var passport = require('passport');
+var session = require('express-session')
 var indexRouter = require('../routes/indexRoute')
-var flash = require('flash')
+
 //var userRouter = require('../routes/userRoute');
 
 
@@ -37,12 +38,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
 
 app.use('/', indexRouter)
-/*
+
 //Error handling
 app.use(function(req, res, next) {
   next(createError(404));
 });
-*/
+
 app.use(cors());
 
 app.listen(3001, () => {
