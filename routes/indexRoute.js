@@ -1,8 +1,12 @@
 //Load User Controller
-var users = require('../controllers/UserController');
+var userController = require('../controllers/UserController');
 var express = require('express');
 var router = express.Router();
 
-router.get('/', users.findUser)
+/* set up GET route for default/Home page. */
+router.get('/', userController.getIndex);
+
+/* set up GET route for default/Home page. */
+router.get('/index', userController.getIndex);
 
 module.exports = router;

@@ -73,5 +73,7 @@ module.exports.addUser= (req, res, next) => {
 
 }
 
-//Function to sign out the user
 
+module.exports.getIndex = function(req, res, next) {
+  res.render('index', { title: 'Index', displayName: req.user ? req.user.displayName : '' });
+}

@@ -28,7 +28,7 @@ mongoDB.once('open', ()=>{
 let app = express();
 
 //views setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 
 app.use(express.json());
@@ -47,8 +47,4 @@ app.use(function(req, res, next) {
 */
 
 app.use(cors());
-
-app.listen(3001, () => {
-  console.log('listening on port 3001');
-})
 module.exports = app;
