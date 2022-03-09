@@ -1,5 +1,3 @@
-<!--Stiil to work on:
-- Working with the database and getting the backend functuonality to login into the application-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,42 +5,69 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" href="stylesheets/index.css">
-    <script defer src="javascript/index.js"></script>
+    <style>
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    .topnav {
+        overflow: hidden;
+        background-color: #333;
+    }
+    
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+    
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+    h1 {
+        text-align: center;
+    }
+    form{
+        text-align: center;
+    }
+    .form-group {
+        border: 1px solid;
+    }
+    </style>
 </head>
 <body>
-    <div class="topnav">
-        <a class="active" href="#login">Login</a>
-        <a href="#profile">Profile</a>
-        <a href="#checklist">Checklist</a>
-        <a href="#calendar">Calendar</a>
-        <a href="#tutor">Tutor</a>
-    </div>
-    <h1>Welcome to All In One Study Application</h1>
-    <img src="images/logo.jfif" height="100">
-    <main id="main-holder">
-        <form action="/index" method="post">
-            <label for="userType">User Type: </label>
-            <select id="userType" name="userType">
-                <option value="student">Student</option>
-                <option value="teacher">Teacher</option>
-            </select>
-
-            <label for="userName">User Name: </label>
-            <input type="text" id="userName" name="userName">
-            <div class="invalid-feedback">
-                Username can not be empty.
-            </div>
-
-            <label for="password">Password: </label>
-            <input type="password" minlength="8" id="password" name="password">
-            <div class="invalid-feedback">
-                Minimum password length is 8.
+    <div>
+        <div class="topnav">
+            <a href="/">Home</a>
+            <a href="#Profile">Profile</a>
+            <a href="#Checklist">Checklist</a>
+            <a href="#Grader">Grader</a>
+            <a href="#Calendar">Calendar</a>
+            <a href="#Tutorial">Tutorial</a>
+        </div>
+        <h1>Welcome to the All in One Study Application</h1>
+        <form action="/">
+            <div class="form-group">
+                <p>User Type:</p>
+                <input type="radio" id="userTypeChoice1"
+                name="userType" value="Student">
+                <label for="userType">Student</label>
+                <input type="radio" id="userTypeChoice2" 
+                name="userType" value="Teacher">
+                <label for="userType">Teacher</label>
+                <p>UserName:</p>
+                <input type="text" id="username" name="username" placeholder="Enter your username">
+                <p>Password:</p>
+                <input type="password" id="password" name="password" placeholder="Enter your password">
+                <br />
+                <button type="submit" id="submit" value="Submit">Submit</button>
             </div>
         </form>
-        <ul>
-            <li><a href="/register">Sign Up, if you havent created an account</a></li>
-        </ul>
-    </main>
+    </div>
 </body>
 </html>
