@@ -12,4 +12,6 @@ module.exports = function (app) {
     app.post('/register', users.addUser())
 }
 
-modules.exports = app;
+router.get("/index", )
+
+module.exports = app;
