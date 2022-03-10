@@ -7,6 +7,7 @@ let cors = require('cors');
 var passport = require('passport');
 var session = require('express-session')
 var indexRouter = require('../routes/indexRoute')
+var userRouter = require('../routes/userRoute')
 
 //var userRouter = require('../routes/userRoute');
 
@@ -38,13 +39,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
 
 app.use('/', indexRouter)
+//app.use('/register', userRouter)
+//app,use('/profile', profileRouter)
+//app.use('/checklist', checklistRouter)
 
-/*
 //Error handling
 app.use(function(req, res, next) {
   next(createError(404));
 });
-*/
 
 app.use(cors());
 module.exports = app;

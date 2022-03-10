@@ -1,7 +1,11 @@
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
-const passport = require('passport')
+var cookieParser = require('cookie-parser');
+var cookieOptions = {
+  signed: true,
+  maxAge: 3000000
+};
 
 // create a reference to the model
 let Users = require('../models/user');
@@ -19,6 +23,8 @@ module.exports.findUser= (req, res, next) => {
       {
           res.status(200).json(usersList);
       }
+      //Redirect to the Profile Page
+      //res.redirect('/profile');
   });
   }
   
@@ -43,7 +49,10 @@ module.exports.findUser= (req, res, next) => {
 
   // function to insert User into DB
 module.exports.addUser= (req, res, next) => {
-  
+  console.log('received the request...');
+  console.log(req.body.username);
+  console.log(req.body.userType);
+
   let newuser = Users({
     username: req.body.username,
     email: req.body.email,
@@ -63,15 +72,15 @@ module.exports.addUser= (req, res, next) => {
     {
       res.status(200).json({success: true, msg: 'Successfully added newuser'});
     }
-    passport.authenticate('local-signup', {
-      successRedirect: '/profile',
-      failureRedirect: '/index', 
-      failureFlash: true
-    })
-
 });
 
 }
+
+//Logout user
+module.exports.logout = (req, res, next) => {
+  res.logout();
+  res.redirect('/');
+};
 
 
 module.exports.getIndex = function(req, res, next) {

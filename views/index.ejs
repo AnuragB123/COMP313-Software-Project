@@ -50,22 +50,24 @@
             <a href="#Calendar">Calendar</a>
             <a href="#Tutorial">Tutorial</a>
         </div>
+
         <h1>Welcome to the All in One Study Application</h1>
-        <form action="/">
+        <form id="loginForm" action="/login" method="post">
             <div class="form-group">
                 <p>User Type:</p>
-                <input type="radio" id="userTypeChoice1"
-                name="userType" value="Student">
-                <label for="userType">Student</label>
-                <input type="radio" id="userTypeChoice2" 
-                name="userType" value="Teacher">
-                <label for="userType">Teacher</label>
+                <select name="userType" id="userType">
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                  </select>
                 <p>UserName:</p>
                 <input type="text" id="username" name="username" placeholder="Enter your username">
                 <p>Password:</p>
                 <input type="password" id="password" name="password" placeholder="Enter your password">
                 <br />
                 <button type="submit" id="submit" value="Submit">Submit</button>
+                <br />
+                <p>If you do not have an account:</p>
+                <a href="/register">Sign Up</a>
             </div>
         </form>
     </div>
