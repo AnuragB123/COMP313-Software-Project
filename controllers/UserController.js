@@ -78,7 +78,6 @@ module.exports.addUser= (req, res, next) => {
 
 //Logout user
 module.exports.logout = (req, res, next) => {
-  res.logout();
   res.redirect('/');
 };
 
@@ -86,3 +85,5 @@ module.exports.logout = (req, res, next) => {
 module.exports.getIndex = function(req, res, next) {
   res.render('index', { title: 'Index', displayName: req.user ? req.user.displayName : '' });
 }
+
+
