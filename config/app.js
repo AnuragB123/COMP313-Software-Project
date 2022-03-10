@@ -5,7 +5,10 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let cors = require('cors');
 var passport = require('passport');
+var session = require('express-session')
 var indexRouter = require('../routes/indexRoute')
+var userRouter = require('../routes/userRoute')
+
 //var userRouter = require('../routes/userRoute');
 
 
@@ -26,7 +29,7 @@ mongoDB.once('open', ()=>{
 let app = express();
 
 //views setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 
 app.use(express.json());
@@ -34,43 +37,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
-app.use(session({
-  "Secret": 'SomeSecret',
-  resave: false,
-  saveUnitialized: false
-})); //session secret
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use(flash());
-
-app.get('/', (req, res) => {
-  res.render('views/index.ejs')
-})
-
-app.get('/register', (req, res) => {
-  res.render('views/register.ejs')
-})
+app.use('/', indexRouter)
+//app.use('/register', userRouter)
+//app,use('/profile', profileRouter)
+//app.use('/checklist', checklistRouter)
 
 //Error handling
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
 app.use(cors());
-
-app.listen(3000, () => {
-  console.log('listening on port 3000');
-})
 module.exports = app;
