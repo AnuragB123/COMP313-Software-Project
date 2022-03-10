@@ -12,4 +12,10 @@ router.post('/login', userController.findUser);
 
 router.get('/logout', userController.logout)
 
+/*
+router.get('/calendar', function(req, res) => {
+    res.render('calendar');
+})
+*/
+
 module.exports = router;
