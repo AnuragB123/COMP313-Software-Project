@@ -10,4 +10,6 @@ router.get('/', userController.getIndex);
 //Process Login
 router.post('/login', userController.findUser);
 
+router.get('/logout', userController.logout)
+
 module.exports = router;
