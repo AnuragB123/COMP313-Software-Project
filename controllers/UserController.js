@@ -1,89 +1,98 @@
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
-var cookieParser = require('cookie-parser');
-var cookieOptions = {
-  signed: true,
-  maxAge: 3000000
-};
+
+let passport = require('passport');
+const bcrypt = require("bcrypt");
+
 
 // create a reference to the model
-let Users = require('../models/user');
+let Usermodel = require('../models/user');
+let User = Usermodel.User; 
 
 //-----------------------------------------------------User operations---------------------------------------------------------
-module.exports.findUser= (req, res, next) => {
-    let email = req.params.email;
-
-    Users.find({email : email},(err, usersList) => {
-      if(err)
-      {
-          return console.error(err);
-      }
-      else
-      {
-          res.status(200).json(usersList);
-      }
-      //Redirect to the Profile Page
-      //res.redirect('/profile');
-  });
-  }
-  
-
-  module.exports.updateUsers= (req, res, next) => {
-    let id = req.params.id;
-
-    Users.updateOne(
-        {_id: id},  // <-- find stage
-        { $set: {    // <-- set stage
-          username: req.body.userid,
-          email: req.body.email,
-          password: req.body.password,
-          userType: req.body.userType,
-          phone: req.body.phone,
-          isTutor: req.body.isTutor
-          }}).then(result => {
-        res.status(200).json({ message: "User Update successful!"});
-      });
-
-  }
-
-  // function to insert User into DB
-module.exports.addUser= (req, res, next) => {
-  console.log('received the request...');
-  console.log(req.body.username);
-  console.log(req.body.userType);
-
-  let newuser = Users({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-    userType: req.body.userType,
-    phone: req.body.phone,
-    isTutor: req.body.isTutor
-  });
-
-  Users.create(newuser, (err, newuser) =>{
-    if(err)
-    {
-        console.log(err);
-        res.end(err);
-    }
-    else
-    {
-      res.status(200).json({success: true, msg: 'Successfully added newuser'});
-    }
-});
-
+// show login form
+getLogin = (req, res)=> {
+  res.render('index', {title: 'Login' , errors: ''}); 
 }
 
-//Logout user
-module.exports.logout = (req, res, next) => {
-  res.redirect('/');
-};
+
+// process login form
+postLogin = (req, res)=> {
+  let errors = [];
+  let username= "vaishali.M";
+  let password="vaishalinn";
+
+  let fetchedUser;
+  User.findOne({ username: username })
+    .then(user => {
+      if (!user) {
+       res.render("index", {title: "Login Fail"});
+      }
+      fetchedUser = user;
+    
+      bcrypt.compare(password, user.password, function(err, data) {
+        if(err){
+          res.render("index", {title: "Login Fail"});   
+        }
+        if(data){
+          res.render("index", {title: "Login Success"});
+        } else {
+          res.render("index", {title: "Login Fail"});
+        }
+      });
+    }) 
+}
 
 
-module.exports.getIndex = function(req, res, next) {
+// process registration form
+postRegistration = (req, res) => {
+  // const {username, email, password, usertype, phone, isTutor} = req.body;
+  let username = "vaishali.M"
+  let email = "vaish@mm.com"
+  let password = "vaishalinn"
+  let usertype = "student"
+  let phone = "111-223"
+  let isTutor = "no"
+
+  bcrypt.hash(password, 10).then(hash => {
+    const user = new User({
+      username: username,
+      phone: phone,
+      email: email,
+      isTutor: isTutor,
+      userType: usertype,
+      password: hash
+    });
+    user
+      .save()
+      .then(result => {
+        res.render("index", {title: "user created"});
+      })
+      .catch(err => {
+        res.status(500).json({
+          error: err
+        });
+      });
+  });
+}
+
+
+// process logout
+getLogout = (req, res, next) => {
+  req.logout();
+  console.log('in getlogout');
+  res.render('/', {title: 'Login' , errors: ''});
+}
+
+
+getIndex = (req, res, next) => {
   res.render('index', { title: 'Index', displayName: req.user ? req.user.displayName : '' });
 }
 
 
+module.exports.getLogin = getLogin
+module.exports.getLogout = getLogout
+module.exports.postLogin = postLogin
+module.exports.getIndex = this.getIndex
+module.exports.postRegistration = postRegistration
