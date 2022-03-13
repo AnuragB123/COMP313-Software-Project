@@ -38,7 +38,8 @@ postLogin = (req, res)=> {
           res.render("index", {messages: "Login Fail"});   
         }
         if(data){
-          res.render("checklist", {messages: "Login Success"});
+          res.render("profile", {messages: "Login Success", username: username, password: password,
+          email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
         } else {
           res.render("index", {messages: "Login Fail"});
         }
