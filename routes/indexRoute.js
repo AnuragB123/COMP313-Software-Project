@@ -5,11 +5,6 @@ var router = express.Router();
 
 
 /* set up GET route for default/Home page. */
-router.get('/', userController.getIndex);
-
-//Process Login
-router.post('/login', userController.findUser);
-
-router.get('/logout', userController.logout)
+router.get('/', userController.getLogin);
 
 module.exports = router;

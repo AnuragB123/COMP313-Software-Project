@@ -11,6 +11,7 @@ var userRouter = require('../routes/userRoute')
 
 //var userRouter = require('../routes/userRoute');
 
+let app = express();
 
 // database setup
 let mongoose = require('mongoose');
@@ -26,7 +27,20 @@ mongoDB.once('open', ()=>{
 });
 
 
-let app = express();
+// create a User Model Instance
+let userModel = require('../models/user');
+let User = userModel.User;
+//body parser
+app.use(express.urlencoded({extended: false}))
+
+//express session
+//setup express session
+app.use(session({
+  secret: "SomeSecret",
+  saveUninitialized: true,
+  resave: true
+}));
+
 
 //views setup
 app.set('views', path.join(__dirname, '../views'));
@@ -39,9 +53,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
 
 app.use('/', indexRouter)
-//app.use('/register', userRouter)
-//app,use('/profile', profileRouter)
-//app.use('/checklist', checklistRouter)
+app.use('/user', userRouter)
 
 //Error handling
 app.use(function(req, res, next) {

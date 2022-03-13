@@ -5,11 +5,8 @@ let mongoose = require('mongoose');
 // create a reference to the model
 let Checklist  = require('../models/checklist');
 
-
-
-
 //-----------------------------------------------------Checklist operations----------------------------------------------------
-module.exports.getChecklist= (req, res, next) => {
+getChecklist= (req, res, next) => {
     
     Checklist.find((err, checkList) => {
       if(err)
@@ -18,13 +15,13 @@ module.exports.getChecklist= (req, res, next) => {
       }
       else
       {
-          res.status(200).json(checkList);
+        res.render('checklist', {messages: '' , data: checkList}); 
       }
   });
   }
 
 
-  module.exports.updateChecklist= (req, res, next) => {
+  postupdateChecklist= (req, res, next) => {
     let id = req.params.id;
 
     Checklist.updateOne(
@@ -41,7 +38,7 @@ module.exports.getChecklist= (req, res, next) => {
 
 
   // function to delete Grades
-module.exports.deleteChecklist = (req, res, next) => {
+postdeleteChecklist = (req, res, next) => {
     let id = req.params.id;
 
     Checklist.remove({_id: id}, (err) => {
@@ -58,3 +55,6 @@ module.exports.deleteChecklist = (req, res, next) => {
 }  
 
 
+module.exports.getChecklist = getChecklist
+module.exports.postdeleteChecklist = postdeleteChecklist
+module.exports.postupdateChecklist = postdeleteChecklist
