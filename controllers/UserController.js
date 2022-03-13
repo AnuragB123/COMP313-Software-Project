@@ -28,20 +28,21 @@ postLogin = (req, res)=> {
   User.findOne({ username: username })
     .then(user => {
       if (!user) {
-       res.render("index", {messages: "Login Fail"});
+       return res.render("index", {messages: "Login Fail"});
       }
+      
       fetchedUser = user;
       console.log(fetchedUser);
 
       bcrypt.compare(password, user.password, function(err, data) {
         if(err){
-          res.render("index", {messages: "Login Fail"});   
+          return res.render("index", {messages: "Login Fail"});   
         }
         if(data){
-          res.render("profile", {messages: "Login Success", username: username, password: password,
+          return res.render("profile", {messages: "Login Success", username: username, password: password,
           email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
         } else {
-          res.render("index", {messages: "Login Fail"});
+          return res.render("index", {messages: "Login Fail"});
         }
       });
     }) 
