@@ -8,6 +8,7 @@ var passport = require('passport');
 var session = require('express-session')
 var indexRouter = require('../routes/indexRoute')
 var userRouter = require('../routes/userRoute')
+var checklistRouter = require('../routes/checklistRoute')
 
 //var userRouter = require('../routes/userRoute');
 
@@ -54,6 +55,7 @@ app.use(express.static(path.join(__dirname, 'node_modules')));
 
 app.use('/', indexRouter)
 app.use('/user', userRouter)
+app.use('/', checklistRouter)
 
 //Error handling
 app.use(function(req, res, next) {

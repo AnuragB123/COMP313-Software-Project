@@ -13,47 +13,48 @@ let User = Usermodel.User;
 //-----------------------------------------------------User operations---------------------------------------------------------
 // show login form
 getLogin = (req, res)=> {
-  res.render('index', {title: 'Login' , errors: ''}); 
+  res.render('index', {messages: 'Login' , errors: ''}); 
 }
 
 
 // process login form
 postLogin = (req, res)=> {
   let errors = [];
-  let username= "vaishali.M";
-  let password="vaishalinn";
+  
+  const {username, password}= req.body;
+  console.log(username, password);
 
   let fetchedUser;
   User.findOne({ username: username })
     .then(user => {
       if (!user) {
-       res.render("index", {title: "Login Fail"});
+       res.render("index", {messages: "Login Fail"});
       }
       fetchedUser = user;
-    
+      console.log(fetchedUser);
+
       bcrypt.compare(password, user.password, function(err, data) {
         if(err){
-          res.render("index", {title: "Login Fail"});   
+          res.render("index", {messages: "Login Fail"});   
         }
         if(data){
-          res.render("index", {title: "Login Success"});
+          res.render("checklist", {messages: "Login Success"});
         } else {
-          res.render("index", {title: "Login Fail"});
+          res.render("index", {messages: "Login Fail"});
         }
       });
     }) 
 }
 
+// show login form
+getRegister = (req, res)=> {
+  res.render('register', {messages: ''}); 
+}
 
 // process registration form
 postRegistration = (req, res) => {
-  // const {username, email, password, usertype, phone, isTutor} = req.body;
-  let username = "vaishali.M"
-  let email = "vaish@mm.com"
-  let password = "vaishalinn"
-  let usertype = "student"
-  let phone = "111-223"
-  let isTutor = "no"
+  const {username, email, password, usertype, phone, isTutor} = req.body;
+  console.log(username, email, password, usertype, phone, isTutor)
 
   bcrypt.hash(password, 10).then(hash => {
     const user = new User({
@@ -67,7 +68,7 @@ postRegistration = (req, res) => {
     user
       .save()
       .then(result => {
-        res.render("index", {title: "user created"});
+        res.render("index", {messages: "user created. Now you can Login"});
       })
       .catch(err => {
         res.status(500).json({
@@ -82,12 +83,12 @@ postRegistration = (req, res) => {
 getLogout = (req, res, next) => {
   req.logout();
   console.log('in getlogout');
-  res.render('/', {title: 'Login' , errors: ''});
+  res.render('/', {messages: 'Login' , errors: ''});
 }
 
 
 getIndex = (req, res, next) => {
-  res.render('index', { title: 'Index', displayName: req.user ? req.user.displayName : '' });
+  res.render('index', { messages: 'Index', displayName: req.user ? req.user.displayName : '' });
 }
 
 
@@ -96,3 +97,4 @@ module.exports.getLogout = getLogout
 module.exports.postLogin = postLogin
 module.exports.getIndex = this.getIndex
 module.exports.postRegistration = postRegistration
+module.exports.getRegister = getRegister

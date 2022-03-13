@@ -5,6 +5,8 @@ var router = express.Router();
 
 
 router.get('/login', userController.getLogin);
-router.post('/login', userController.postRegistration);
+router.post('/login', userController.postLogin);
+router.get('/register', userController.getRegister);
+router.post('/register', userController.postRegistration);
 
 module.exports = router;
