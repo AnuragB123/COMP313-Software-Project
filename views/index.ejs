@@ -10,7 +10,9 @@
         margin: 0;
         font-family: Arial, Helvetica, sans-serif;
     }
-    
+    p {
+        text-align: center;
+    }
     .topnav {
         overflow: hidden;
         background-color: #333;
@@ -53,6 +55,7 @@
         </div>
 
         <h1>Welcome to the All in One Study Application</h1>
+        <p>This application will help students and teachers stay organized during their studies</p>
         <form id="loginForm" action="/login" method="post">
             <div class="form-group">
                 <p>User Type:</p>
@@ -60,11 +63,12 @@
                     <option value="student">Student</option>
                     <option value="teacher">Teacher</option>
                   </select>
-                <p>UserName:</p>
+                <p>User Name:</p>
                 <input type="text" id="username" name="username" placeholder="Enter your username">
                 <p>Password:</p>
                 <input type="password" id="password" name="password" placeholder="Enter your password">
                 <br />
+                <p></p>
                 <button type="submit" id="submit" value="Submit">Submit</button>
                 <br />
                 <p>If you do not have an account:</p>
