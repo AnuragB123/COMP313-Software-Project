@@ -1,12 +1,10 @@
 //Load User Controller
-var users = require('../controllers/UserController');
+var userController = require('../controllers/UserController');
 var express = require('express');
 var router = express.Router();
-var db = require('../config/db')
-var passport = require('passport')
 
-router.get('/index', users.findUser())
 
-router.post('/register', users.addUser())
+/* set up GET route for default/Home page. */
+router.get('/', userController.getLogin);
 
 module.exports = router;

@@ -9,21 +9,29 @@
                 </div>
               <% } %>
   
-              <form method="POST" id="registerForm" novalidate>
+              <form method="POST" id="registerForm" action="/user/register" novalidate>
                 <p class="hint-text">Create your own account. It's free and only takes a minute.</p>
                 <p class="lead"><i class="fas fa-user-shield"></i> Personal Information</p>
                 
                 <div class="row text-center mt-2">
                     <div class="col-lg-4 col-4">Type of User ?</div>
                     <div class="col-lg-1 col-1">Student</div>
-                    <div class="col-lg-2 col-2"><input type="radio" name="isowner" value="student" id="student" required></div>
+                    <div class="col-lg-2 col-2"><input type="radio" name="usertype" value="student" id="student" required></div>
                     <div class="col-lg-1 col-1">Teacher</div>
-                    <div class="col-lg-2 col-2"><input type="radio" name="isowner" value="teacher" id="teacher" required></div>
+                    <div class="col-lg-2 col-2"><input type="radio" name="usertype" value="teacher" id="teacher" required></div>
                   </div>
-  
+                
+                  <div class="row text-center mt-2">
+                    <div class="col-lg-4 col-4">Is Tutor</div>
+                    <div class="col-lg-1 col-1">Yes</div>
+                    <div class="col-lg-2 col-2"><input type="radio" name="isTutor" value="yes" id="yes" required></div>
+                    <div class="col-lg-1 col-1">No</div>
+                    <div class="col-lg-2 col-2"><input type="radio" name="isTutor" value="no" id="no" required></div>
+                  </div>
+
                 <div class="row">
                   <div class="col-md-12">
-                    <input type="email" class="form-control" id="emailAddress" name="emailAddress"
+                    <input type="email" class="form-control" id="email" name="email"
                     value="" placeholder="Email Address" required>
                   </div>
 
@@ -35,14 +43,6 @@
   
                 
                 <p class="lead"><i class="fas fa-database"></i>System Identification</p>
-                
-                <div class="row">              
-                    <div class="col-md-12">
-                      <input type="text" class="form-control" id="UserID" name="UserID"  
-                      value="" placeholder="UserID" required>
-                    </div>
-                  </div>
-
                 <div class="row">              
                   <div class="col-md-12">
                     <input type="text" class="form-control" id="username" name="username"  
@@ -71,7 +71,7 @@
                 
                <p class="text-center text-white small">
                 Already have an account? 
-                <a href="#index" class="text-warning">Sign in</a>
+                <a href="/" class="text-warning">Sign in</a>
               </p>
               </form>
              

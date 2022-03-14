@@ -1,77 +1,102 @@
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
-const passport = require('passport')
+
+let passport = require('passport');
+const bcrypt = require("bcrypt");
+
 
 // create a reference to the model
-let Users = require('../models/user');
+let Usermodel = require('../models/user');
+let User = Usermodel.User; 
 
 //-----------------------------------------------------User operations---------------------------------------------------------
-module.exports.findUser= (req, res, next) => {
-    let email = req.params.email;
-
-    Users.find({email : email},(err, usersList) => {
-      if(err)
-      {
-          return console.error(err);
-      }
-      else
-      {
-          res.status(200).json(usersList);
-      }
-  });
-  }
-  
-
-  module.exports.updateUsers= (req, res, next) => {
-    let id = req.params.id;
-
-    Users.updateOne(
-        {_id: id},  // <-- find stage
-        { $set: {    // <-- set stage
-          username: req.body.userid,
-          email: req.body.email,
-          password: req.body.password,
-          userType: req.body.userType,
-          phone: req.body.phone,
-          isTutor: req.body.isTutor
-          }}).then(result => {
-        res.status(200).json({ message: "User Update successful!"});
-      });
-
-  }
-
-  // function to insert User into DB
-module.exports.addUser= (req, res, next) => {
-  
-  let newuser = Users({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-    userType: req.body.userType,
-    phone: req.body.phone,
-    isTutor: req.body.isTutor
-  });
-
-  Users.create(newuser, (err, newuser) =>{
-    if(err)
-    {
-        console.log(err);
-        res.end(err);
-    }
-    else
-    {
-      res.status(200).json({success: true, msg: 'Successfully added newuser'});
-    }
-    passport.authenticate('local-signup', {
-      successRedirect: '/profile',
-      failureRedirect: '/index', 
-      failureFlash: true
-    })
-
-});
-
+// show login form
+getLogin = (req, res)=> {
+  res.render('index', {messages: 'Login' , errors: ''}); 
 }
 
-//Function to sign out the user
 
+// process login form
+postLogin = (req, res)=> {
+  let errors = [];
+  
+  const {username, password}= req.body;
+  console.log(username, password);
+
+  let fetchedUser;
+  User.findOne({ username: username })
+    .then(user => {
+      if (!user) {
+       return res.render("index", {messages: "Login Fail"});
+      }
+      
+      fetchedUser = user;
+      console.log(fetchedUser);
+
+      bcrypt.compare(password, user.password, function(err, data) {
+        if(err){
+          return res.render("index", {messages: "Login Fail"});   
+        }
+        if(data){
+          return res.render("profile", {messages: "Login Success", username: username, password: password,
+          email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
+        } else {
+          return res.render("index", {messages: "Login Fail"});
+        }
+      });
+    }) 
+}
+
+// show login form
+getRegister = (req, res)=> {
+  res.render('register', {messages: ''}); 
+}
+
+// process registration form
+postRegistration = (req, res) => {
+  const {username, email, password, usertype, phone, isTutor} = req.body;
+  console.log(username, email, password, usertype, phone, isTutor)
+
+  bcrypt.hash(password, 10).then(hash => {
+    const user = new User({
+      username: username,
+      phone: phone,
+      email: email,
+      isTutor: isTutor,
+      userType: usertype,
+      password: hash
+    });
+    user
+      .save()
+      .then(result => {
+        res.render("index", {messages: "user created. Now you can Login"});
+      })
+      .catch(err => {
+        res.status(500).json({
+          error: err
+        });
+      });
+  });
+}
+
+
+// process logout
+getLogout = (req, res, next) => {
+  req.logout();
+  console.log('in getlogout');
+  res.render('/', {messages: 'Login' , errors: ''});
+}
+
+
+getIndex = (req, res, next) => {
+  res.render('index', { messages: 'Index', displayName: req.user ? req.user.displayName : '' });
+}
+
+
+module.exports.getLogin = getLogin
+module.exports.getLogout = getLogout
+module.exports.postLogin = postLogin
+module.exports.getIndex = this.getIndex
+module.exports.postRegistration = postRegistration
+module.exports.getRegister = getRegister
