@@ -1,36 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home and Login Page</title>
-    <link rel="stylesheet" href="/public/assets/styles.css"/>
-</head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home and Login Page</title>
+<link rel="stylesheet" href="/public/assets/styles.css"/>
 <div>
     <%- include('partials/navbar') %>
 </div>
 <div class="main-content">
     <h1>Welcome to the All in One Study Application</h1>
-<p>This application will help students and teachers stay organized during their studies</p>
-<form id="loginForm" action="/user/profile" method="post">
-    <p>User Type:</p>
-                <select name="userType" id="userType">
-                    <option value="student">Student</option>
-                    <option value="teacher">Teacher</option>
-                  </select>
-                <p>User Name:</p>
-                <input type="text" id="username" name="username" placeholder="Enter your username">
-                <p>Password:</p>
-                <input type="password" id="password" name="password" placeholder="Enter your password">
-                <br />
-                <p></p>
-                <button type="submit" id="submit" value="Submit">Submit</button>
-                <br />
-                <p>If you do not have an account:</p>
-                <a href="/user/register">Sign Up</a>
-            
-        </form>
+    <p>This application will help students and teachers stay organized during their studies</p>
+    <form id="loginForm" action="/user/profile" method="post">
+        <p>User Name:</p>
+        <input type="text" id="username" name="username" placeholder="Enter your username">
+        <p>Password:</p>
+        <input type="password" id="password" name="password" placeholder="Enter your password">
+        <br />
+        <p></p>
+        <button type="submit" id="submit" value="Submit">Submit</button>
+        <br />
+        <p>If you do not have an account:</p>
+        <a href="/user/register">Sign Up</a>
+    </form>
 </div>
 
 </html>
