@@ -5,11 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home and Login Page</title>
-    <style>
-        .main-content {
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="/public/assets/styles.css"/>
 </head>
 <div>
     <%- include('partials/navbar') %>
@@ -18,8 +14,7 @@
     <h1>Welcome to the All in One Study Application</h1>
 <p>This application will help students and teachers stay organized during their studies</p>
 <form id="loginForm" action="/user/profile" method="post">
-            <div class="form-group">
-                <p>User Type:</p>
+    <p>User Type:</p>
                 <select name="userType" id="userType">
                     <option value="student">Student</option>
                     <option value="teacher">Teacher</option>
@@ -34,7 +29,7 @@
                 <br />
                 <p>If you do not have an account:</p>
                 <a href="/user/register">Sign Up</a>
-            </div>
+            
         </form>
 </div>
 
