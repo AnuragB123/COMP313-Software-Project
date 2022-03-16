@@ -10,7 +10,7 @@
     <p>This application will help students and teachers stay organized during their studies</p>
     <img src="/public/images/logo.jfif" />
     <p></p>
-    <h1><%= messages %></h1>
+    <%- include('partials/error') %>
     <form name="loginForm" id="loginForm" action="/user/profile" method="post">
         <p>User Name:</p>
         <input type="text" id="username" name="username" placeholder="Enter your username" required >
