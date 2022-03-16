@@ -10,11 +10,12 @@
     <p>This application will help students and teachers stay organized during their studies</p>
     <img src="/public/images/logo.jfif" />
     <p></p>
+    <h1><%= messages %></h1>
     <form name="loginForm" id="loginForm" action="/user/profile" method="post">
         <p>User Name:</p>
         <input type="text" id="username" name="username" placeholder="Enter your username" required >
         <p>Password:</p>
-        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required minlength="4">
         <br />
         <p></p>
         <button type="submit" id="submit" value="Submit">Submit</button>
