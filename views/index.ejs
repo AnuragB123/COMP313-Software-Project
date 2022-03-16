@@ -2,6 +2,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Home and Login Page</title>
 <link rel="stylesheet" href="/public/assets/styles.css"/>
+<script>
+    function validate() {
+
+    }
+</script>
 <div>
     <%- include('partials/navbar') %>
 </div>
@@ -10,11 +15,11 @@
     <p>This application will help students and teachers stay organized during their studies</p>
     <img src="/public/images/logo.jfif" />
     <p></p>
-    <form id="loginForm" action="/user/profile" method="post">
+    <form name="loginForm" id="loginForm" action="/user/profile" method="post">
         <p>User Name:</p>
-        <input type="text" id="username" name="username" placeholder="Enter your username">
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
         <p>Password:</p>
-        <input type="password" id="password" name="password" placeholder="Enter your password">
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
         <br />
         <p></p>
         <button type="submit" id="submit" value="Submit">Submit</button>
