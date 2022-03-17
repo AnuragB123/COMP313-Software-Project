@@ -80,6 +80,23 @@ postRegistration = (req, res) => {
   });
 }
 
+module.exports.updateUsers= (req, res, next) => {
+  
+  
+  Users.updateOne(
+      {username: req.body.username},  // <-- find stage
+      { $set: {    // <-- set stage
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        userType: req.body.userType,
+        phone: req.body.phone,
+        isTutor: req.body.isTutor
+        }}).then(result => {
+          res.render('profile', {messages: 'Profile updated successfully!!' , errors: ''});
+    });
+}
+
 
 // process logout
 getLogout = (req, res, next) => {
