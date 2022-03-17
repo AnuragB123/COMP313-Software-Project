@@ -15,7 +15,8 @@
                   <%= messages %>
                 </div>
               <% } %>
-  
+              <p></p>
+              <%- include('partials/error') %>
               <form method="POST" id="registerForm" action="/user/register">
                 <p class="hint-text">Create your own account. It's free and only takes a minute.</p>
                 <p class="lead"><i class="fas fa-user-shield"></i> Personal Information</p>
@@ -60,12 +61,12 @@
                 <div class="row">
                   <div class="col-lg-6 col-md-6">
                     <input type="password" class="form-control" id="password" name="password"
-                    value="" placeholder="Password" required>
+                    value="" placeholder="Password" required required minlength="4">
                   </div>
   
                    <div class="col-lg-6 col-md-6">
                     <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
-                    value="" placeholder="Confirm Password" required>
+                    value="" placeholder="Confirm Password" required required minlength="4">
                   </div>
                 </div>        
                  
