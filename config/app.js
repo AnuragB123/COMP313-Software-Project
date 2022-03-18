@@ -8,8 +8,7 @@ var passport = require('passport');
 var session = require('express-session')
 var indexRouter = require('../routes/indexRoute')
 var userRouter = require('../routes/userRoute')
-
-//var userRouter = require('../routes/userRoute');
+var checkListRouter = require('../routes/checklistRoute')
 
 let app = express();
 
@@ -48,13 +47,14 @@ app.set('view engine', 'ejs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('prime'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/public', express.static('public'));
 app.use(express.static(path.join(__dirname, 'node_modules')));
 
 app.use('/', indexRouter)
 app.use('/user', userRouter)
+app.use('/checklist', checkListRouter)
 
 //Error handling
 app.use(function(req, res, next) {
