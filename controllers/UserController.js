@@ -68,7 +68,7 @@ postRegistration = (req, res) => {
   console.log(username, email, password, usertype, phone, isTutor)
 
   bcrypt.hash(password, 10).then(hash => {
-    const user = new User({
+    const user = new Users({
       username: username,
       phone: phone,
       email: email,
