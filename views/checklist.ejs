@@ -9,25 +9,31 @@
     <%- include('partials/navbar') %>
 </div>
 
-  <body>
-    <div class="container">
-        <h1>
-            Checklist
-        </h1>
-      <p>
-        <label for="new-task">Add Item</label><input id="new-task" type="text"><button>Add</button>
-      </p>
-     
-      
-      <h3>On going</h3>
-      
-      
-      <h3>Completed</h3>
-      
-    </div>
 
+<body>
+  <div class="container">
+      <h1>
+          Checklist
+      </h1>
+    <p>
+      <label for="new-task">Add Item</label><input id="new-task" type="text"><button>Add</button>
+    </p>
+   
+    
+    <h3>On going</h3>
+    <ul id="incomplete-tasks">
+      <li class="editMode"></li>
+      
+    </ul>
+    
+    <h3>Completed</h3>
+    <ul id="completed-tasks">
+      <li></li>
+    </ul>
+  </div>
 
 <script>
+
 
 // Store user input?
 
