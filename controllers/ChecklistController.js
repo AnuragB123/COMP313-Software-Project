@@ -32,6 +32,7 @@ getChecklist= (req, res, next) => {
 postupdateChecklist= (req, res, next) => {
     let id = req.params.id;
 
+    console.log(id);
     Checklist.updateOne(
         {_id: id},  // <-- find stage
         { $set: {    // <-- set stage
@@ -45,12 +46,36 @@ postupdateChecklist= (req, res, next) => {
   }
 
 
+postinsertChecklist = (req, res, next) => {
+
+  console.log(req.signedCookies.cookies.user._id);
+  const user_id = req.signedCookies.cookies.user._id.toString();
+
+  let newchecklist = Checklist({
+    userid: user_id,
+    title: req.body.title,
+    status: req.body.status
+  });
+
+  Checklist.create(newchecklist, (err, checkist) =>{
+    if(err)
+    {
+        console.log(err);
+        res.end(err);
+    }
+    else
+    {
+      console.log("checklist inserted");
+      res.render("checklist", {success: true, messages: 'Successfully added checklist'});
+    }
+});
+}
 
   // function to delete checklist
 postdeleteChecklist = (req, res, next) => {
     let id = req.params.id;
 
-    Checklist.remove({_id: id}, (err) => {
+    Checklist.deleteOne({_id: id}, (err) => {
         if(err)
         {
             console.log(err);
@@ -85,5 +110,6 @@ get_checklist_to_edit= (req, res, next) => {
 
 module.exports.getChecklist = getChecklist
 module.exports.postdeleteChecklist = postdeleteChecklist
-module.exports.postupdateChecklist = postdeleteChecklist
+module.exports.postupdateChecklist = postupdateChecklist
 module.exports.get_checklist_to_edit = get_checklist_to_edit
+module.exports.postinsertChecklist = postinsertChecklist
