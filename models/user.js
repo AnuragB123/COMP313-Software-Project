@@ -1,6 +1,11 @@
+/*
+Developers who contributed to this file:
+Vaishali 
+*/
+//Third party libraries
 const mongoose = require("mongoose");
 let passport = require('passport');
-
+//User Schema
 const User = mongoose.Schema({
   username: {type: String, unique: true, required: "username is required"},
   password: {type: String,required: "password is required"},
@@ -16,5 +21,5 @@ const User = mongoose.Schema({
     }
 );
 
-
+//Exporting Model
 module.exports.User = mongoose.model("User", User);

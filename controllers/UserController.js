@@ -1,3 +1,11 @@
+/*
+Developers who contributed to this file:
+Vaishali
+Arpit
+Anurag 
+*/
+
+//third party libraries
 let express = require('express');
 const bcrypt = require("bcrypt");
 var cookieParser = require('cookie-parser');
@@ -89,6 +97,7 @@ postRegistration = (req, res) => {
   });
 }
 
+//Update User Information
 updateUsers= (req, res, next) => {
   let username = req.body.username;
   let email = req.body.email;
@@ -129,10 +138,10 @@ getLogout = (req, res, next) => {
     cookies.user = null;
     res.cookie('cookies', cookies, cookieOptions)
   console.log('in getlogout');
-  res.render('/', {messages: 'Login' , errors: ''});
+  res.render('index', {messages: 'Login' , errors: ''});
 }
 
-
+//Getting the Index Page
 getIndex = (req, res, next) => {
   res.render('index', { messages: 'Index', displayName: req.user ? req.user.displayName : '' });
 }
@@ -160,7 +169,7 @@ getProfile = (req, res, next)=> {
   });
 }
 
-
+//Exporting Functions Calls
 module.exports.getLogin = getLogin
 module.exports.getLogout = getLogout
 module.exports.postLogin = postLogin
