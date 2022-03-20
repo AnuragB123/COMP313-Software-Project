@@ -33,6 +33,8 @@ let User = userModel.User;
 //body parser
 app.use(express.urlencoded({extended: false}))
 
+console.log("it came here-1");
+
 //express session
 //setup express session
 app.use(session({
@@ -53,8 +55,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/public', express.static('public'));
 app.use(express.static(path.join(__dirname, 'node_modules')));
 
+console.log("it came here-2");
+
 app.use('/', indexRouter)
 app.use('/user', userRouter)
+
+console.log("it came here-3");
 
 //Error handling
 app.use(function(req, res, next) {

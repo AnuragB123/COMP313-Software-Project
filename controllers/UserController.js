@@ -80,21 +80,35 @@ postRegistration = (req, res) => {
   });
 }
 
-module.exports.updateUsers= (req, res, next) => {
-  
-  
-  Users.updateOne(
-      {username: req.body.username},  // <-- find stage
-      { $set: {    // <-- set stage
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        userType: req.body.userType,
-        phone: req.body.phone,
-        isTutor: req.body.isTutor
-        }}).then(result => {
-          res.render('profile', {messages: 'Profile updated successfully!!' , errors: ''});
-    });
+updateUsers= (req, res, next) => {
+  let username = req.body.username;
+  let email = req.body.email;
+  let password = req.body.password;
+  let userType = req.body.userType;
+  let phone = req.body.phone;
+  let isTutor = req.body.isTutor;
+
+  let query = {username: username};  // <-- find stage
+  let update = { $set: {    // <-- set stage
+      username : username,
+      email : email,
+      password : password,
+      userType : userType,
+      phone : phone,
+      isTutor : isTutor
+    }};
+  let options = {
+    "upsert": false
+ };
+  User.updateOne(query, update, options)
+  .then(result => {
+    if(result.matchedCount && result.modifiedCount) {
+      console.log(`User Updated successfully!!!`);
+    }
+    res.render("profile", {messages: "User Updated successfully!!!", username: username, password: password,
+          email: email, userType: userType, phone: phone, isTutor: isTutor});
+    })
+    .catch(err => console.error(`Failed to update user: ${err}`))
 }
 
 
@@ -117,3 +131,4 @@ module.exports.postLogin = postLogin
 module.exports.getIndex = this.getIndex
 module.exports.postRegistration = postRegistration
 module.exports.getRegister = getRegister
+module.exports.updateUsers = updateUsers
