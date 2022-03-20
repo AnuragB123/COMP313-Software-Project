@@ -121,7 +121,11 @@ var radioboxTutor = document.createElement('input');
 
 //radioboxStudent.onclick = handleRadioClick(this, form);
 //radioboxTeacher.onclick = handleRadioClick(this, form);
-    
+form.appendChild(labelTutor);
+    form.appendChild(radioboxTutor);
+    form.appendChild(labelNonTutor);
+    form.appendChild(radioboxNonTutor);
+    form.appendChild(br.cloneNode());
 // Append the submit button to the form
 form.appendChild(s);
 
