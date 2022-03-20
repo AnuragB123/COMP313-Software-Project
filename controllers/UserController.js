@@ -89,7 +89,6 @@ postRegistration = (req, res) => {
   });
 }
 
-
 updateUsers= (req, res, next) => {
   let username = req.body.username;
   let email = req.body.email;
