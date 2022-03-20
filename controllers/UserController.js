@@ -142,7 +142,7 @@ getProfile = (req, res, next)=> {
   console.log(req.signedCookies.cookies.user._id);
   const user_id = req.signedCookies.cookies.user._id.toString();
 
-  if(!user_id){
+  if(!user_id || user_id === null){
     res.render('index', {messages: 'Please login to see profile page.'}); 
   }
 
