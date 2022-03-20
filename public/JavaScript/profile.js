@@ -40,11 +40,7 @@ radioboxTeacher.type = 'radio';
 radioboxTeacher.id = 'teacher-radio';
 radioboxTeacher.value = 'teacher';
 radioboxTeacher.name = 'userType';
-radioboxStudent.checked = true;
-
-document.querySelectorAll("input[name='userType']").forEach((input) => {
-    input.addEventListener('change', handleRadioClick);
-});
+radioboxTeacher.checked = true;
 
 // Create a label for radio element student
 var labelStudent = document.createElement('label')
@@ -57,32 +53,6 @@ var labelTeacher = document.createElement('label')
 labelTeacher.htmlFor = 'teacher-radio';
 var descriptionTeacher = document.createTextNode('Teacher');
 labelTeacher.appendChild(descriptionTeacher);
-
-// Create an radio element for userType isTutor
-var radioboxTutor = document.createElement('input');
-radioboxTutor.type = 'radio';
-radioboxTutor.id = 'isTutor-radio';
-radioboxTutor.value = 'yes';
-radioboxTutor.name = 'isTutor';
-
-// Create an radio element for userType notTutor
-var radioboxNonTutor = document.createElement('input');
-radioboxNonTutor.type = 'radio';
-radioboxNonTutor.id = 'notTutor-radio';
-radioboxNonTutor.value = 'no';
-radioboxNonTutor.name = 'isTutor';
-
-// Create a label for radio element student
-var labelTutor = document.createElement('label')
-labelTutor.htmlFor = 'isTutor-radio';
-var descriptionTutor = document.createTextNode('Tutor?');
-labelTutor.appendChild(descriptionTutor);
-
-// Create a label for radio element teacher
-var labelNonTutor = document.createElement('label')
-labelNonTutor.htmlFor = 'notTutor-radio';
-var descriptionNonTutor = document.createTextNode('Not Tutor?');
-labelNonTutor.appendChild(descriptionNonTutor);
 
 // Create an input element for phone number
 var PhoneNo = document.createElement("input");
@@ -123,6 +93,34 @@ form.appendChild(radioboxStudent);
 form.appendChild(labelTeacher);
 form.appendChild(radioboxTeacher);
 form.appendChild(br.cloneNode());
+
+var radioboxTutor = document.createElement('input');
+    radioboxTutor.type = 'radio';
+    radioboxTutor.id = 'isTutor-radio';
+    radioboxTutor.value = 'yes';
+    radioboxTutor.name = 'isTutor';
+
+    // Create an radio element for userType notTutor
+    var radioboxNonTutor = document.createElement('input');
+    radioboxNonTutor.type = 'radio';
+    radioboxNonTutor.id = 'notTutor-radio';
+    radioboxNonTutor.value = 'no';
+    radioboxNonTutor.name = 'isTutor';
+
+    // Create a label for radio element student
+    var labelTutor = document.createElement('label')
+    labelTutor.htmlFor = 'isTutor-radio';
+    var descriptionTutor = document.createTextNode('Tutor?');
+    labelTutor.appendChild(descriptionTutor);
+
+    // Create a label for radio element teacher
+    var labelNonTutor = document.createElement('label')
+    labelNonTutor.htmlFor = 'notTutor-radio';
+    var descriptionNonTutor = document.createTextNode('Not Tutor?');
+    labelNonTutor.appendChild(descriptionNonTutor);
+
+//radioboxStudent.onclick = handleRadioClick(this, form);
+//radioboxTeacher.onclick = handleRadioClick(this, form);
     
 // Append the submit button to the form
 form.appendChild(s);
@@ -135,11 +133,21 @@ oldDiv.parentNode.replaceChild(form, oldDiv);
 form.parentNode.removeChild(updateBtn);
 }
 
-function handleRadioClick(event) {
-    // Append radio buttons for tutor-type
-    form.appendChild(labelTutor);
-    form.appendChild(radioboxTutor);
-    form.appendChild(labelNonTutor);
-    form.appendChild(radioboxNonTutor);
-    form.appendChild(br.cloneNode());
-}
+// function handleRadioClick(event, form) {
+//     // Create an radio element for userType isTutor
+    
+
+//     console.log(event.value);
+//     // Append radio buttons for tutor-type
+//     if(event.value === ""){
+//         form.appendChild(labelTutor);
+//         form.appendChild(radioboxTutor);
+//         form.appendChild(labelNonTutor);
+//         form.appendChild(radioboxNonTutor);
+//         form.appendChild(br.cloneNode());
+//     } else if(event.value === ""){
+
+//     } else {
+
+//     }
+// }

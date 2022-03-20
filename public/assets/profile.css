@@ -1544,7 +1544,7 @@ img {
     position: absolute;
     right: 0px;
     font-family: 'icomoon';
-    speak: none;
+    /*speak: none;*/
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
@@ -1883,12 +1883,12 @@ img {
     z-index: 9999;
     background: url(../images/loader.gif) center no-repeat #fff;
   }
-  .js .animate-box {
-    /*opacity: 0;*/
+  /*.js .animate-box {
+    /*opacity: 0;
   }
   .js .customize-partial-edit-shortcuts-shown .animate-box{
-    /*opacity: 1;*/
-  }
+    /*opacity: 1;
+  }*/
   
     /*----------------------------------------------*/
   /*----------------------------------------------*/
