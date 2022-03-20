@@ -97,6 +97,8 @@ updateUsers= (req, res, next) => {
   let phone = req.body.phone;
   let isTutor = req.body.isTutor;
 
+  console.log(req.body);
+
   let query = {username: username};  // <-- find stage
   let update = { $set: {    // <-- set stage
       username : username,
