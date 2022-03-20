@@ -17,14 +17,15 @@ form.setAttribute("action", "/user/updateProfile");
 var usrname = document.createElement("input");
 usrname.setAttribute("type", "text");
 usrname.setAttribute("name", "username");
-usrname.setAttribute("disabled", "true");
+usrname.setAttribute("readonly", "readonly");
 usrname.setAttribute("value", usernameText);
 
 // Create an input element for emailID
 var EID = document.createElement("input");
-EID.setAttribute("type", "text");
+EID.setAttribute("type", "email");
 EID.setAttribute("name", "email");
 EID.setAttribute("placeholder", "E-Mail ID");
+EID.setAttribute("required", true);
 
 // Create an radio element for userType student
 var radioboxStudent = document.createElement('input');
@@ -39,6 +40,11 @@ radioboxTeacher.type = 'radio';
 radioboxTeacher.id = 'teacher-radio';
 radioboxTeacher.value = 'teacher';
 radioboxTeacher.name = 'userType';
+radioboxStudent.checked = true;
+
+document.querySelectorAll("input[name='userType']").forEach((input) => {
+    input.addEventListener('change', handleRadioClick);
+});
 
 // Create a label for radio element student
 var labelStudent = document.createElement('label')
@@ -80,9 +86,16 @@ labelNonTutor.appendChild(descriptionNonTutor);
 
 // Create an input element for phone number
 var PhoneNo = document.createElement("input");
-PhoneNo.setAttribute("type", "text");
+PhoneNo.setAttribute("type", "tel");
+PhoneNo.setAttribute("pattern", "[0-9]{10}");
 PhoneNo.setAttribute("name", "phone");
 PhoneNo.setAttribute("placeholder", "Phone Number");
+PhoneNo.setAttribute("required", true);
+
+// Create a label for number format
+var labelPhoneFormat = document.createElement('small');
+var descriptionPhoneFormat = document.createTextNode('Format - 1234567890');
+labelPhoneFormat.appendChild(descriptionPhoneFormat);
 
 // create a submit button
 var s = document.createElement("input");
@@ -101,19 +114,14 @@ form.appendChild(br.cloneNode());
 // Append the Phone number to the form
 form.appendChild(PhoneNo);
 form.appendChild(br.cloneNode());
+form.appendChild(labelPhoneFormat);
+form.appendChild(br.cloneNode());
 
 // Append radio buttons for user-type
 form.appendChild(labelStudent);
 form.appendChild(radioboxStudent);
 form.appendChild(labelTeacher);
 form.appendChild(radioboxTeacher);
-form.appendChild(br.cloneNode());
-
-// Append radio buttons for tutor-type
-form.appendChild(labelTutor);
-form.appendChild(radioboxTutor);
-form.appendChild(labelNonTutor);
-form.appendChild(radioboxNonTutor);
 form.appendChild(br.cloneNode());
     
 // Append the submit button to the form
@@ -125,4 +133,13 @@ let updateBtn = document.getElementById("btnUpdateProfile");
 //document.getElementsByTagName("body")[0].appendChild(form);
 oldDiv.parentNode.replaceChild(form, oldDiv);
 form.parentNode.removeChild(updateBtn);
+}
+
+function handleRadioClick(event) {
+    // Append radio buttons for tutor-type
+    form.appendChild(labelTutor);
+    form.appendChild(radioboxTutor);
+    form.appendChild(labelNonTutor);
+    form.appendChild(radioboxNonTutor);
+    form.appendChild(br.cloneNode());
 }
