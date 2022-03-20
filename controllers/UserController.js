@@ -110,7 +110,7 @@ updateUsers= (req, res, next) => {
   let options = {
     "upsert": false
  };
-  User.updateOne(query, update, options)
+  Users.updateOne(query, update, options)
   .then(result => {
     if(result.matchedCount && result.modifiedCount) {
       console.log(`User Updated successfully!!!`);
