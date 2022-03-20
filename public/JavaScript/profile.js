@@ -4,12 +4,21 @@ var down = document.getElementById("profileForm");
 var br = document.createElement("br");
 
 function updateProfile() {
+
+let usernameDiv = document.getElementById("username-para");
+let usernameText = usernameDiv.innerText.split(":")[1].trim();
             
 // Create a form dynamically
 var form = document.createElement("form");
 form.setAttribute("method", "post");
 form.setAttribute("id", "profileForm");
 form.setAttribute("action", "/user/updateProfile");
+
+var usrname = document.createElement("input");
+usrname.setAttribute("type", "text");
+usrname.setAttribute("name", "username");
+usrname.setAttribute("disabled", "true");
+usrname.setAttribute("value", usernameText);
 
 // Create an input element for emailID
 var EID = document.createElement("input");
@@ -80,7 +89,11 @@ var s = document.createElement("input");
 s.setAttribute("type", "submit");
 s.setAttribute("value", "Submit");
     
-    
+
+// Append the usrname to the form
+form.appendChild(usrname);
+form.appendChild(br.cloneNode());
+
 // Append the emailID to the form
 form.appendChild(EID);
 form.appendChild(br.cloneNode());

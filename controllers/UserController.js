@@ -97,6 +97,8 @@ updateUsers= (req, res, next) => {
   let phone = req.body.phone;
   let isTutor = req.body.isTutor;
 
+  console.log(req.body);
+
   let query = {username: username};  // <-- find stage
   let update = { $set: {    // <-- set stage
       username : username,
@@ -109,7 +111,7 @@ updateUsers= (req, res, next) => {
   let options = {
     "upsert": false
  };
-  User.updateOne(query, update, options)
+  Users.updateOne(query, update, options)
   .then(result => {
     if(result.matchedCount && result.modifiedCount) {
       console.log(`User Updated successfully!!!`);
