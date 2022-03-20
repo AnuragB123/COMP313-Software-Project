@@ -129,7 +129,7 @@ getLogout = (req, res, next) => {
     cookies.user = null;
     res.cookie('cookies', cookies, cookieOptions)
   console.log('in getlogout');
-  res.render('/', {messages: 'Login' , errors: ''});
+  res.render('index', {messages: 'Login' , errors: ''});
 }
 
 
