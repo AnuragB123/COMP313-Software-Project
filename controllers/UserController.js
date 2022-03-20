@@ -137,6 +137,29 @@ getIndex = (req, res, next) => {
   res.render('index', { messages: 'Index', displayName: req.user ? req.user.displayName : '' });
 }
 
+// get profile page
+getProfile = (req, res, next)=> {
+  console.log(req.signedCookies.cookies.user._id);
+  const user_id = req.signedCookies.cookies.user._id.toString();
+
+  if(!user_id){
+    res.render('index', {messages: 'Please login to see profile page.'}); 
+  }
+
+  Users.find({ "_id":  user_id}, function(err, user) {
+    if(err)
+    {
+        return console.error(err);
+    }
+    else
+    {
+      user = user[0];
+      res.render("profile", {messages: "User Updated successfully!!!", username: user.username, password: user.password,
+          email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
+    }
+  });
+}
+
 
 module.exports.getLogin = getLogin
 module.exports.getLogout = getLogout
@@ -145,3 +168,4 @@ module.exports.getIndex = this.getIndex
 module.exports.postRegistration = postRegistration
 module.exports.getRegister = getRegister
 module.exports.updateUsers = updateUsers
+module.exports.getProfile = getProfile

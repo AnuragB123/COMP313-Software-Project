@@ -367,7 +367,7 @@ img {
   }
   @media screen and (max-width: 768px) {
     .video-hero {
-      heifght: inherit;
+      height: inherit;
       padding: 3em 0;
     }
   }
