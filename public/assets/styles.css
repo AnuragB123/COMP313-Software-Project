@@ -1342,7 +1342,14 @@ img {
     border: 1px solid #e6e6e6;
   }
   input[type="text"] {
-    height: 50px;
+    box-shadow: none;
+    border: 1px solid #f0f0f0;
+    font-size: 16px !important;
+    font-weight: 300;
+    background: white;
+    border-radius: 0px;
+    margin-left: 10px;
+    padding-left: 10px;
   }
   .form-group {
     margin-bottom: 30px;
