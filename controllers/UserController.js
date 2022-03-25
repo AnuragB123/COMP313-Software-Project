@@ -1,89 +1,180 @@
+/*
+Developers who contributed to this file:
+Vaishali
+Arpit
+Anurag 
+*/
+
+//third party libraries
 let express = require('express');
-let router = express.Router();
-let mongoose = require('mongoose');
+const bcrypt = require("bcrypt");
 var cookieParser = require('cookie-parser');
 var cookieOptions = {
-  signed: true,
-  maxAge: 3000000
+    signed: true,
+    maxAge: 3000000
 };
 
 // create a reference to the model
-let Users = require('../models/user');
+let Usermodel = require('../models/user');
+let Users = Usermodel.User; 
 
-//-----------------------------------------------------User operations---------------------------------------------------------
-module.exports.findUser= (req, res, next) => {
-    let email = req.params.email;
+// show login form
+getLogin = (req, res)=> {
+  res.render('index', {messages: 'Login' }); 
+}
 
-    Users.find({email : email},(err, usersList) => {
-      if(err)
-      {
-          return console.error(err);
-      }
-      else
-      {
-          res.status(200).json(usersList);
-      }
-      //Redirect to the Profile Page
-      //res.redirect('/profile');
-  });
-  }
+// process login form
+postLogin = (req, res)=> {
   
+  const {username, password}= req.body;
+  console.log(username, password);
 
-  module.exports.updateUsers= (req, res, next) => {
-    let id = req.params.id;
+  let fetchedUser;
+    Users.findOne({ username: username })
+    .then(user => {
+      if (!user) {
+       return res.render("index", {messages: "Login Fail"});
+      }
 
-    Users.updateOne(
-        {_id: id},  // <-- find stage
-        { $set: {    // <-- set stage
-          username: req.body.userid,
-          email: req.body.email,
-          password: req.body.password,
-          userType: req.body.userType,
-          phone: req.body.phone,
-          isTutor: req.body.isTutor
-          }}).then(result => {
-        res.status(200).json({ message: "User Update successful!"});
+      fetchedUser = user;
+      console.log(fetchedUser);
+      
+      bcrypt.compare(password, user.password, function(err, data) {
+        if(err){
+          return res.render("index", {messages: "Login Fail"});   
+        }
+        if(data){
+          let cookies = req.signedCookies.cookies;
+            if (cookies) {
+                cookies.user = user
+            } else {
+                cookies = {
+                    user: user
+                }
+            }
+          
+          res.cookie('cookies', cookies, cookieOptions);  
+          return res.render("profile", {messages: "Login Success", username: username, password: password,
+          email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
+        } else {
+          return res.render("index", {messages: "Login Fail"});
+        }
       });
 
+  })
+}
+
+  // show login form
+getRegister = (req, res)=> {
+  res.render('register', {messages: ''}); 
+}
+    
+    
+// process registration form
+postRegistration = (req, res) => {
+  const {username, email, password, usertype, phone, isTutor} = req.body;
+  console.log(username, email, password, usertype, phone, isTutor)
+
+  bcrypt.hash(password, 10).then(hash => {
+    const user = new Users({
+      username: username,
+      phone: phone,
+      email: email,
+      isTutor: isTutor,
+      userType: usertype,
+      password: hash
+    });
+    user
+      .save()
+      .then(result => {
+        res.render("index", {messages: "user created. Now you can Login"});
+      })
+      .catch(err => {
+        res.status(500).json({
+          error: err
+        });
+      });
+  });
+}
+
+//Update User Information
+updateUsers= (req, res, next) => {
+  let username = req.body.username;
+  let email = req.body.email;
+  let password = req.body.password;
+  let userType = req.body.userType;
+  let phone = req.body.phone;
+  let isTutor = req.body.isTutor;
+
+  console.log(req.body);
+
+  let query = {username: username};  // <-- find stage
+  let update = { $set: {    // <-- set stage
+      username : username,
+      email : email,
+      password : password,
+      userType : userType,
+      phone : phone,
+      isTutor : isTutor
+    }};
+  let options = {
+    "upsert": false
+ };
+  Users.updateOne(query, update, options)
+  .then(result => {
+    if(result.matchedCount && result.modifiedCount) {
+      console.log(`User Updated successfully!!!`);
+    }
+    res.render("profile", {messages: "User Updated successfully!!!", username: username, password: password,
+          email: email, userType: userType, phone: phone, isTutor: isTutor});
+    })
+    .catch(err => console.error(`Failed to update user: ${err}`))
+}
+
+
+// process logout
+getLogout = (req, res, next) => {
+  let cookies = req.signedCookies.cookies;
+    cookies.user = null;
+    res.cookie('cookies', cookies, cookieOptions)
+  console.log('in getlogout');
+  res.render('index', {messages: 'Login' , errors: ''});
+}
+
+//Getting the Index Page
+getIndex = (req, res, next) => {
+  res.render('index', { messages: 'Index', displayName: req.user ? req.user.displayName : '' });
+}
+
+// get profile page
+getProfile = (req, res, next)=> {
+  console.log(req.signedCookies.cookies.user._id);
+  const user_id = req.signedCookies.cookies.user._id.toString();
+
+  if(!user_id || user_id === null){
+    res.render('index', {messages: 'Please login to see profile page.'}); 
   }
 
-  // function to insert User into DB
-module.exports.addUser= (req, res, next) => {
-  console.log('received the request...');
-  console.log(req.body.username);
-  console.log(req.body.userType);
-
-  let newuser = Users({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-    userType: req.body.userType,
-    phone: req.body.phone,
-    isTutor: req.body.isTutor
-  });
-
-  Users.create(newuser, (err, newuser) =>{
+  Users.find({ "_id":  user_id}, function(err, user) {
     if(err)
     {
-        console.log(err);
-        res.end(err);
+        return console.error(err);
     }
     else
     {
-      res.status(200).json({success: true, msg: 'Successfully added newuser'});
+      user = user[0];
+      res.render("profile", {messages: "User Updated successfully!!!", username: user.username, password: user.password,
+          email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
     }
-});
-
+  });
 }
 
-//Logout user
-module.exports.logout = (req, res, next) => {
-  res.redirect('/');
-};
-
-
-module.exports.getIndex = function(req, res, next) {
-  res.render('index', { title: 'Index', displayName: req.user ? req.user.displayName : '' });
-}
-
-
+//Exporting Functions Calls
+module.exports.getLogin = getLogin
+module.exports.getLogout = getLogout
+module.exports.postLogin = postLogin
+module.exports.getIndex = this.getIndex
+module.exports.postRegistration = postRegistration
+module.exports.getRegister = getRegister
+module.exports.updateUsers = updateUsers
+module.exports.getProfile = getProfile
