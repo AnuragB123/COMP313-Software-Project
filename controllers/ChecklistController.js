@@ -15,9 +15,17 @@ let Checklist  = checklist.Checklist;
 //-----------------------------------------------------Checklist operations----------------------------------------------------
 //Getting the Checklist Page
 getChecklist= (req, res, next) => {
-    
+  const user_id = '';
+
+  try{
     console.log(req.signedCookies.cookies.user._id);
-    const user_id = req.signedCookies.cookies.user._id.toString();
+    req.signedCookies.cookies.user._id.toString(); 
+  }
+  
+  catch(e){
+    console.log('Unknown user');
+    return res.render('index', {messages: ''});
+  }
 
     Checklist.find({ "userid":  user_id}, function(err, checkList) {
       if(err)
