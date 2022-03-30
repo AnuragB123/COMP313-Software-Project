@@ -11,9 +11,13 @@ let mongoose = require('mongoose');
 let Grade  = require('../models/grade');
 
 //-----------------------------------------------------Grade operations--------------------------------------------------------
-// show grader form
-getGrader = (req, res)=> {
+// show teacher grader form
+getTeacherGraderPage = (req, res)=> {
   res.render('teacherGrader', {messages: 'Add Grades' }); 
+}
+// show student grader form
+getStudentGraderPage = (req, res)=> {
+  res.render('studentGrader', {messages: 'View Grades' }); 
 }
 // function to get Grades
 getGrades= (req, res, next) => {
@@ -88,7 +92,8 @@ addGrade= (req, res, next) => {
   }
 
   //Exporting functions
-  module.exports.getGrader = getGrader;
+  module.exports.getTeacherGraderPage = getTeacherGraderPage;
+  module.exports.getStudentGraderPage = getStudentGraderPage;
   module.exports.getGrades = getGrades;
   module.exports.deleteGrade = deleteGrade;
   module.exports.updateGrade = updateGrade;
