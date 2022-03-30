@@ -11,8 +11,12 @@ let mongoose = require('mongoose');
 let Grade  = require('../models/grade');
 
 //-----------------------------------------------------Grade operations--------------------------------------------------------
+// show grader form
+getGrader = (req, res)=> {
+  res.render('teacherGrader', {messages: 'Add Grades' }); 
+}
 // function to get Grades
-module.exports.getGrades= (req, res, next) => {
+getGrades= (req, res, next) => {
     let uid = req.params.userid;
 
     Grade.find({userid : uid},(err, gradesList) => {
@@ -28,7 +32,7 @@ module.exports.getGrades= (req, res, next) => {
   }
   
 // function to delete Grades
-module.exports.deleteGrade = (req, res, next) => {
+deleteGrade = (req, res, next) => {
     let id = req.params.id;
 
     Grade.remove({_id: id}, (err) => {
@@ -45,7 +49,7 @@ module.exports.deleteGrade = (req, res, next) => {
 }  
 
 // function to update a Grade
-module.exports.updateGrade = (req, res, next) => {
+updateGrade = (req, res, next) => {
     let id = req.params.id
   
     Grade.updateOne(
@@ -61,7 +65,7 @@ module.exports.updateGrade = (req, res, next) => {
   }
 
   // function to insert Grade into DB
-module.exports.addGrade= (req, res, next) => {
+addGrade= (req, res, next) => {
     
     let newgrade = Grade({
       userid: req.body.userid,
@@ -82,6 +86,13 @@ module.exports.addGrade= (req, res, next) => {
       }
   });
   }
+
+  //Exporting functions
+  module.exports.getGrader = getGrader;
+  module.exports.getGrades = getGrades;
+  module.exports.deleteGrade = deleteGrade;
+  module.exports.updateGrade = updateGrade;
+  module.exports.addGrade = addGrade;
 
 
   

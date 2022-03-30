@@ -15,6 +15,7 @@ var session = require('express-session')
 var indexRouter = require('../routes/indexRoute')
 var userRouter = require('../routes/userRoute')
 var checkListRouter = require('../routes/checklistRoute')
+var graderRouter = require('../routes/graderRoute')
 
 //Express App
 let app = express();
@@ -66,6 +67,7 @@ app.use(express.static(path.join(__dirname, 'node_modules')));
 app.use('/', indexRouter)
 app.use('/user', userRouter)
 app.use('/checklist', checkListRouter)
+app.use('/grader', graderRouter)
 
 //Error handling
 app.use(function(req, res, next) {
