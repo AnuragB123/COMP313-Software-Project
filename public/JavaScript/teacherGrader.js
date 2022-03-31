@@ -29,7 +29,18 @@ function addStudentGrades() {
     // Create an input element for grade
     var GM = document.createElement("input");
     GM.setAttribute("type", "text");
-    GM.setAttribute("name", "courseName");
-    GM.setAttribute("placeholder", "Course Name:");
+    GM.setAttribute("name", "grade");
+    GM.setAttribute("placeholder", "Grade:");
     GM.setAttribute("required", true);
+
+    var GM = document.createElement("input");
+    GM.setAttribute("type", "text");
+    GM.setAttribute("name", "grade");
+    GM.setAttribute("placeholder", "Grade:");
+    GM.setAttribute("required", true);
+
+    // create a submit button
+    var s = document.createElement("input");
+    s.setAttribute("type", "submit");
+    s.setAttribute("value", "Add Grade");
 }
