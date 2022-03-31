@@ -1,5 +1,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/public/assets/styles.css"/>
+<script src="../public/JavaScript/teacherGrader.js"></script>
 <title>Teacher Grader Page</title>
 <div>
     <%- include('partials/navbar') %>
@@ -7,20 +9,16 @@
 <div class="main-content">
     <h1>Here you will insert grades for your students</h1>
     <%- include('partials/error') %>
-    <form name="studentGradeForm" id="studentGradeForm" action="#Submit" method="post">
-        <p>Student ID:</p>
-        <input type="text" id="userid" name="userid" placeholder="Enter Student's ID" required >
-        <p>Course Name:</p>
-        <input type="text" id="courseName" name="courseName" placeholder="Enter Student's Course Name" required >
-        <p>Course Grade:</p>
-        <input type="text" id="courseGrade" name="courseGrade" placeholder="Enter Student's Course Grade" required >
-        <p>Course Mark:</p>
-        <input type="decimal" id="courseMark" name="courseMark" placeholder="Enter Student's Course Mark" required >
-        <br />
-        <p></p>
-        <button type="submit" id="submit" value="Submit">Add Grade</button>
-    </form>
 
+    <label>Student Name: </label>
+    <!--
+    <select id="student-name">
+        <% for (const i in studentList) { %>
+        <option value="<%= studentList[i].userId %>"> <%= studentList[i].userName %> </option>
+        <% } %>
+    </select>-->
+    <button onClick="addStudentGrades()" id="btnStudentGrades">Add Grades</button>
+    <p id="studentGradesForm"></p>
 </div>
 <div>
     <%- include('partials/footer') %>
