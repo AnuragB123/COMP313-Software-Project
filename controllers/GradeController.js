@@ -11,7 +11,7 @@ let mongoose = require('mongoose');
 let Grade  = require('../models/grade');
 
 //-----------------------------------------------------Grade operations--------------------------------------------------------
-// show teacher grader form, need to figure out how to pass the list of student users (need to work with Vaishali)
+// show teacher grader form, need to figure out how to pass the list of student users (need to work with Vaishali/Arpit)
 getTeacherGraderPage = (req, res)=> {
   res.render('teacherGrader', {messages: 'Add Grades'}); 
 }
