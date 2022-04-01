@@ -10,13 +10,17 @@ let mongoose = require('mongoose');
 // create a reference to the model
 let Grade  = require('../models/grade');
 
+let User = require('../models/user');
+
 //-----------------------------------------------------Grade operations--------------------------------------------------------
 // show teacher grader form, need to figure out how to pass the list of student users (need to work with Vaishali/Arpit)
 getTeacherGraderPage = (req, res)=> {
+  //Filter users who are user type student and then put them into a list and then pass this list as a paarameter... into the res.render
   res.render('teacherGrader', {messages: 'Add Grades'}); 
 }
 // show student grader form
 getStudentGraderPage = (req, res)=> {
+  //Grader object of userid (user logged in)
   res.render('studentGrader', {messages: 'View Grades' }); 
 }
 // function to get Grades
