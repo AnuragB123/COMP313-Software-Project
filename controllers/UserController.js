@@ -148,9 +148,19 @@ getIndex = (req, res, next) => {
 
 // get profile page
 getProfile = (req, res, next)=> {
-  console.log(req.signedCookies.cookies.user._id);
-  const user_id = req.signedCookies.cookies.user._id.toString();
+  
+  const user_id = '';
 
+  try{
+    console.log(req.signedCookies.cookies.user._id);
+    req.signedCookies.cookies.user._id.toString(); 
+  }
+  
+  catch(e){
+    console.log('Unknown user');
+    return res.render('index', {messages: ''});
+  }
+ 
   if(!user_id || user_id === null){
     res.render('index', {messages: 'Please login to see profile page.'}); 
   }
