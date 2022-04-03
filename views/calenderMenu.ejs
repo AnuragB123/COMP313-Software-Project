@@ -8,14 +8,20 @@
 <div>
     <%- include('partials/navbar') %>
 </div>
-<iframe src='<%- Calender._id %>' id='calender' style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-<div>
-    <%- include('partials/footer') %>
-</div>
+
+
+<body>
+    <div class="main-content">
+        <h1>
+            Calender Menu
+        </h1>
+            <div class="text-end">
+            <a  class="btn btn-primary" href="/calender/crud">Add/Delete Calender</a>
+            <a  class="btn btn-primary" href="/calender/finder">Find Calender</a>
+            </div>
+    </div>
+
+    <div>
+        <%- include('partials/footer') %>
+    </div>
 </body>
-
-<script>
-
-    //let src = database.query
-
-</script>
