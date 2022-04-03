@@ -1,3 +1,9 @@
+/*
+Developers who contributed to this file:
+Vaishali 
+Marisa
+*/
+//Using third party libraries
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
@@ -6,10 +12,8 @@ let mongoose = require('mongoose');
 let checklist  = require('../models/checklist');
 let Checklist  = checklist.Checklist;
 
-
-
-
 //-----------------------------------------------------Checklist operations----------------------------------------------------
+//Getting the Checklist Page
 getChecklist= (req, res, next) => {
     
     console.log(req.signedCookies.cookies.user._id);
@@ -28,7 +32,7 @@ getChecklist= (req, res, next) => {
   });
   }
 
-
+//When User updates a Checklist item
 postupdateChecklist= (req, res, next) => {
     let id = req.params.id;
 
@@ -45,7 +49,7 @@ postupdateChecklist= (req, res, next) => {
       });
   }
 
-
+//When User inserts a Checklist item
 postinsertChecklist = (req, res, next) => {
 
   console.log(req.signedCookies.cookies.user._id);
@@ -71,7 +75,7 @@ postinsertChecklist = (req, res, next) => {
 });
 }
 
-  // function to delete checklist
+// function to delete checklist
 postdeleteChecklist = (req, res, next) => {
     let id = req.params.id;
 
@@ -89,7 +93,7 @@ postdeleteChecklist = (req, res, next) => {
     });
 }  
 
-
+//Getting the checklist item to edit
 get_checklist_to_edit= (req, res, next) => {
     
   let id = req.params.id; 
@@ -107,7 +111,7 @@ get_checklist_to_edit= (req, res, next) => {
 });
 }
 
-
+//Exporting all the function calls
 module.exports.getChecklist = getChecklist
 module.exports.postdeleteChecklist = postdeleteChecklist
 module.exports.postupdateChecklist = postupdateChecklist

@@ -1,3 +1,11 @@
+/*
+Developers who contributed to this file:
+Vaishali
+Arpit
+Anurag 
+*/
+
+//third party libraries
 let express = require('express');
 const bcrypt = require("bcrypt");
 var cookieParser = require('cookie-parser');
@@ -89,6 +97,7 @@ postRegistration = (req, res) => {
   });
 }
 
+//Update User Information
 updateUsers= (req, res, next) => {
   let username = req.body.username;
   let email = req.body.email;
@@ -96,6 +105,8 @@ updateUsers= (req, res, next) => {
   let userType = req.body.userType;
   let phone = req.body.phone;
   let isTutor = req.body.isTutor;
+
+  console.log(req.body);
 
   let query = {username: username};  // <-- find stage
   let update = { $set: {    // <-- set stage
@@ -127,15 +138,38 @@ getLogout = (req, res, next) => {
     cookies.user = null;
     res.cookie('cookies', cookies, cookieOptions)
   console.log('in getlogout');
-  res.render('/', {messages: 'Login' , errors: ''});
+  res.render('index', {messages: 'Login' , errors: ''});
 }
 
-
+//Getting the Index Page
 getIndex = (req, res, next) => {
   res.render('index', { messages: 'Index', displayName: req.user ? req.user.displayName : '' });
 }
 
+// get profile page
+getProfile = (req, res, next)=> {
+  console.log(req.signedCookies.cookies.user._id);
+  const user_id = req.signedCookies.cookies.user._id.toString();
 
+  if(!user_id || user_id === null){
+    res.render('index', {messages: 'Please login to see profile page.'}); 
+  }
+
+  Users.find({ "_id":  user_id}, function(err, user) {
+    if(err)
+    {
+        return console.error(err);
+    }
+    else
+    {
+      user = user[0];
+      res.render("profile", {messages: "User Updated successfully!!!", username: user.username, password: user.password,
+          email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
+    }
+  });
+}
+
+//Exporting Functions Calls
 module.exports.getLogin = getLogin
 module.exports.getLogout = getLogout
 module.exports.postLogin = postLogin
@@ -143,3 +177,4 @@ module.exports.getIndex = this.getIndex
 module.exports.postRegistration = postRegistration
 module.exports.getRegister = getRegister
 module.exports.updateUsers = updateUsers
+module.exports.getProfile = getProfile

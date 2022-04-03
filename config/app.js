@@ -1,3 +1,8 @@
+/*
+Developers who contributed to this file:
+Vaishali 
+*/
+
 // installed 3rd party packages
 let createError = require('http-errors');
 let express = require('express');
@@ -6,10 +11,12 @@ let cookieParser = require('cookie-parser');
 let cors = require('cors');
 var passport = require('passport');
 var session = require('express-session')
+//Routers for Pages
 var indexRouter = require('../routes/indexRoute')
 var userRouter = require('../routes/userRoute')
 var checkListRouter = require('../routes/checklistRoute')
 
+//Express App
 let app = express();
 
 // database setup
@@ -19,20 +26,18 @@ let DB = require('./db');
 // point mongoose to the DB URI
 mongoose.connect(DB.URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
+//Connection to MongoDB server
 let mongoDB = mongoose.connection;
 mongoDB.on('error', console.error.bind(console, 'Connection Error:'));
 mongoDB.once('open', ()=>{
   console.log('Connected to MongoDB...');
 });
 
-
 // create a User Model Instance
 let userModel = require('../models/user');
 let User = userModel.User;
 //body parser
 app.use(express.urlencoded({extended: false}))
-
-console.log("it came here-1");
 
 //express session
 //setup express session
@@ -46,26 +51,29 @@ app.use(session({
 //views setup
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
-
+//express setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+//Setup Cookie Settings
 app.use(cookieParser('prime'));
+
+//Directories to Public and Node Modules for external packages
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/public', express.static('public'));
 app.use(express.static(path.join(__dirname, 'node_modules')));
 
-console.log("it came here-2");
-
+//Using our Routes
 app.use('/', indexRouter)
 app.use('/user', userRouter)
 app.use('/checklist', checkListRouter)
-
-console.log("it came here-3");
 
 //Error handling
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
+//Using Cors
 app.use(cors());
+
+//Exporting the function file
 module.exports = app;
