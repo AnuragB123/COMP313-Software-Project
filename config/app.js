@@ -16,6 +16,7 @@ var indexRouter = require('../routes/indexRoute')
 var userRouter = require('../routes/userRoute')
 var checkListRouter = require('../routes/checklistRoute')
 var calenderRouter = require('../routes/calenderRoute')
+var tutorRouter = require('../routes/tutorRoute')
 
 //Express App
 let app = express();
@@ -68,6 +69,7 @@ app.use('/', indexRouter)
 app.use('/user', userRouter)
 app.use('/checklist', checkListRouter)
 app.use('/calender', calenderRouter)
+app.use('/tutor', tutorRouter)
 
 //Error handling
 app.use(function(req, res, next) {

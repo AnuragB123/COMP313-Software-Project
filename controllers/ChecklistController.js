@@ -1,7 +1,6 @@
 /*
 Developers who contributed to this file:
 Vaishali 
-Marisa
 */
 //Using third party libraries
 let express = require('express');
@@ -15,11 +14,11 @@ let Checklist  = checklist.Checklist;
 //-----------------------------------------------------Checklist operations----------------------------------------------------
 //Getting the Checklist Page
 getChecklist= (req, res, next) => {
-  const user_id = '';
+  let user_id = '';
 
   try{
     console.log(req.signedCookies.cookies.user._id);
-    req.signedCookies.cookies.user._id.toString(); 
+    user_id = req.signedCookies.cookies.user._id.toString(); 
   }
   
   catch(e){
