@@ -22,7 +22,7 @@ module.exports.getGrades= (req, res, next) => {
       }
       else
       {
-          res.status(200).json(gradesList);
+        res.render('grader', { messages: 'Grader' });
       }
   });
   }
@@ -39,7 +39,7 @@ module.exports.deleteGrade = (req, res, next) => {
         }
         else
         {
-          res.status(200).json({success: true, msg: 'Successfully Deleted Grade'});
+          res.render('grader', { messages: 'Grader' });
         }
     });
 }  
@@ -56,7 +56,7 @@ module.exports.updateGrade = (req, res, next) => {
         grade: req.body.grade,
         marks: req.body.marks
         }}).then(result => {
-      res.status(200).json({ message: "Grade Update successful!"});
+          res.render('grader', { messages: 'Grader' });
     });
   }
 
@@ -78,7 +78,7 @@ module.exports.addGrade= (req, res, next) => {
       }
       else
       {
-        res.status(200).json({success: true, msg: 'Successfully added grade'});
+        res.render('grader', { messages: 'Grader' });
       }
   });
   
