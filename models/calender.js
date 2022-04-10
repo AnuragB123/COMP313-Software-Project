@@ -6,12 +6,13 @@ Joseph Volpe
 const mongoose = require("mongoose");
 //Schema for Calender Item
 const Calender = mongoose.Schema({
-    userid: {type: String, required: "userid is required"},
-    calender: {type: String,required: "calender is required"}
+    _id: {type: String, required: "calender is required"},
+    userid: {type: String, required: "userid is required"}
+ 
   }
   ,
       {
-          collection: "Calender"
+          collection: "Calenders"
       }
   );
   //Exporting the Calender model
