@@ -105,18 +105,29 @@ updateUsers= (req, res, next) => {
   let userType = req.body.userType;
   let phone = req.body.phone;
   let isTutor = req.body.isTutor;
+  let newPasswordText = password;
 
   console.log(req.body);
 
+  let update;
+
+  bcrypt.hash(password, 10).then(hash => {
+    password = hash
+  });
+
+  update = { $set: {    // <-- set stage
+    username : username,
+    email : email,
+    password : password,
+    userType : userType,
+    phone : phone,
+    isTutor : isTutor
+  }};
+
+  console.log("update : " + update.$set.password);
+
   let query = {username: username};  // <-- find stage
-  let update = { $set: {    // <-- set stage
-      username : username,
-      email : email,
-      password : password,
-      userType : userType,
-      phone : phone,
-      isTutor : isTutor
-    }};
+  
   let options = {
     "upsert": false
  };
@@ -125,7 +136,7 @@ updateUsers= (req, res, next) => {
     if(result.matchedCount && result.modifiedCount) {
       console.log(`User Updated successfully!!!`);
     }
-    res.render("profile", {messages: "User Updated successfully!!!", username: username, password: password,
+    res.render("profile", {messages: "User Updated successfully!!!", username: username, password: newPasswordText,
           email: email, userType: userType, phone: phone, isTutor: isTutor});
     })
     .catch(err => console.error(`Failed to update user: ${err}`))
