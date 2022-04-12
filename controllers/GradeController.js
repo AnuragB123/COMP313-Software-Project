@@ -8,14 +8,73 @@ let router = express.Router();
 let mongoose = require('mongoose');
 
 // create a reference to the model
-let Grade  = require('../models/grade');
+let grade  = require('../models/grade');
+
+let user = require('../models/user');
 
 //-----------------------------------------------------Grade operations--------------------------------------------------------
+// show teacher grader form, need to figure out how to pass the list of student users (need to work with Vaishali/Arpit)
+getGraderPage = (req, res)=> {
+  //Filter users who are user type student and then put them into a list and then pass this list as a paarameter... into the res.render
+  let cookies = req.signedCookies.cookies;
+  let user = cookies.user;
+  if(!user){
+    res.render('index', {messages: 'Please login as a teacher to see students data.'});
+  }
+  if(user.userType == 'teacher'){
+    getTeacherGraderPage(req, res);
+  } else {
+    if(user.userType == 'student'){
+      getStudentGraderPage(req, res);
+    } else {
+      res.render('teacherGrader', {messages: 'Error'}); 
+    }
+  }
+}
+
+getTeacherGraderPage = (req, res)=> {
+  //Filter users who are user type student and then put them into a list and then pass this list as a paarameter... into the res.render
+  const User = user.User;
+  User.find({ userType: 'student' })
+    .then(users => {
+      if (!users) {
+       return res.render("teacherGrader", {students: {}, messages : "Welcome to teacher Dashboard"});
+      }
+    res.render('teacherGrader', {students: users}); 
+  })
+
+}
+
+
+// show student grader form
+getStudentGraderPage = (req, res)=> {
+  //Grader object of userid (user logged in)
+  const Grade = grade.Grade;
+  let cookies = req.signedCookies.cookies;
+  let user = cookies.user;
+  if(!user){
+    res.render('index', {messages: 'There was some issue while fetching student details.'});
+  }
+  console.log(user._id);
+  if(Grade){
+    Grade.find({ userid: user._id })
+    .then(grades => {
+      if (!grades) {
+       return res.render("studentGrader", {students: {}, messages : "No grades found."});
+      }
+      res.render('studentGrader', {grades: grades});
+    })
+  } else {
+    console.log("grade table not found.")
+
+  }
+  
+}
 // function to get Grades
-module.exports.getGrades= (req, res, next) => {
+getGrades= (req, res, next) => {
     let uid = req.params.userid;
 
-    Grade.find({userid : uid},(err, gradesList) => {
+    grade.find({userid : uid},(err, gradesList) => {
       if(err)
       {
           return console.error(err);
@@ -28,10 +87,10 @@ module.exports.getGrades= (req, res, next) => {
   }
   
 // function to delete Grades
-module.exports.deleteGrade = (req, res, next) => {
+deleteGrade = (req, res, next) => {
     let id = req.params.id;
 
-    Grade.remove({_id: id}, (err) => {
+    grade.remove({_id: id}, (err) => {
         if(err)
         {
             console.log(err);
@@ -45,10 +104,10 @@ module.exports.deleteGrade = (req, res, next) => {
 }  
 
 // function to update a Grade
-module.exports.updateGrade = (req, res, next) => {
+updateGrade = (req, res, next) => {
     let id = req.params.id
   
-    Grade.updateOne(
+    grade.updateOne(
       {_id: id},  // <-- find stage
       { $set: {    // <-- set stage
         userid: req.body.userid,
@@ -61,16 +120,16 @@ module.exports.updateGrade = (req, res, next) => {
   }
 
   // function to insert Grade into DB
-module.exports.addGrade= (req, res, next) => {
+addGrade= (req, res, next) => {
     
-    let newgrade = Grade({
+    let newgrade = grade({
       userid: req.body.userid,
       courseName: req.body.courseName,
       grade: req.body.grade,
       marks: req.body.marks
     });
   
-    Grade.create(newgrade, (err, grade) =>{
+    grade.create(newgrade, (err, grade) =>{
       if(err)
       {
           console.log(err);
@@ -81,7 +140,14 @@ module.exports.addGrade= (req, res, next) => {
         res.render('grader', { messages: 'Grader' });
       }
   });
-  
-  
   }
+
+  //Exporting functions
+  module.exports.getGraderPage = getGraderPage;
+  module.exports.getGrades = getGrades;
+  module.exports.deleteGrade = deleteGrade;
+  module.exports.updateGrade = updateGrade;
+  module.exports.addGrade = addGrade;
+
+
   

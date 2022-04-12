@@ -15,7 +15,6 @@ var session = require('express-session')
 var indexRouter = require('../routes/indexRoute')
 var userRouter = require('../routes/userRoute')
 var checkListRouter = require('../routes/checklistRoute')
-var calenderRouter = require('../routes/calenderRoute')
 var graderRouter = require('../routes/graderRoute')
 
 //Express App
@@ -68,7 +67,6 @@ app.use(express.static(path.join(__dirname, 'node_modules')));
 app.use('/', indexRouter)
 app.use('/user', userRouter)
 app.use('/checklist', checkListRouter)
-app.use('/calender', calenderRouter)
 app.use('/grader', graderRouter)
 
 //Error handling

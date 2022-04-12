@@ -1,7 +1,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-signin-client_id" content="781995421050-jp2l72lr8r149ng5a8ft530q0mblnmc6.apps.googleusercontent.com">
 <title>Home and Login Page</title>
 <link rel="stylesheet" href="/public/assets/styles.css"/>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="../public/JavaScript/googleSignIn.js"></script>
 <div>
     <%- include('partials/navbar') %>
 </div>
@@ -19,6 +22,7 @@
         <br />
         <p></p>
         <button type="submit" id="submit" value="Submit">Submit</button>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
         <br />
         <p>If you do not have an account:</p>
         <a href="/user/register">Sign Up</a>
