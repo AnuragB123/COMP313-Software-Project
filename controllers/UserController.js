@@ -3,6 +3,7 @@ Developers who contributed to this file:
 Vaishali
 Arpit
 Anurag 
+Prajwal
 */
 
 //third party libraries
@@ -25,15 +26,17 @@ getLogin = (req, res)=> {
 
 // process login form
 postLogin = (req, res)=> {
-  
-  const {username, password}= req.body;
-  console.log(username, password);
-
-  let fetchedUser;
+  /*if(!req.body.value.id_token){
+    console.log("error");
+  }*/
+  if(req.body.value  === undefined){
+    const {username, password}= req.body;
+    console.log(username, password);
+    let fetchedUser;
     Users.findOne({ username: username })
     .then(user => {
       if (!user) {
-       return res.render("index", {messages: "Login Fail"});
+        return res.render("index", {messages: "Login Fail"});
       }
 
       fetchedUser = user;
@@ -45,14 +48,13 @@ postLogin = (req, res)=> {
         }
         if(data){
           let cookies = req.signedCookies.cookies;
-            if (cookies) {
-                cookies.user = user
-            } else {
-                cookies = {
-                    user: user
-                }
-            }
-          
+          if (cookies) {
+              cookies.user = user
+          } else {
+              cookies = {
+                  user: user
+              }
+          }          
           res.cookie('cookies', cookies, cookieOptions);  
           return res.render("profile", {messages: "Login Success", username: username, password: password,
           email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
@@ -60,8 +62,67 @@ postLogin = (req, res)=> {
           return res.render("index", {messages: "Login Fail"});
         }
       });
+    });
+  }
 
-  })
+  else{
+    const{id_token, data} = req.body.value;
+    let fetchedUser;
+    Users.findOne({ email: data.email })
+    .then(user => {
+      if(!user) {
+        const password = id_token;
+        bcrypt.hash(password, 10).then(hash => {
+          const gUser = new Users({
+            username: data.name,
+            phone: data.phone,
+            email: data.email,
+            isTutor: "null",
+            userType: "null",
+            password: hash
+          });
+          gUser.save()
+          .then( () => {
+            user = gUser;
+            console.log(`1: ${user}`);
+            let cookies = req.signedCookies.cookies;
+            if (cookies) {
+              cookies.user = user
+            } else {
+              cookies = {
+                user: user
+              }
+            } 
+            res.cookie('cookies', cookies, cookieOptions); 
+            return res.render('profile', {messages: "Google Login Success", username: user.username, password: user.password,
+              email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});         
+          })
+          .catch(err => {
+            res.status(500).json({
+              error: err
+            });
+          });        
+        });
+      }
+      console.log(`2: ${user}`); 
+      if(user){
+        console.log(`3: ${user}`); 
+        fetchedUser = user;
+        console.log(fetchedUser);
+        let cookies = req.signedCookies.cookies;
+        if (cookies) {
+          cookies.user = user
+        } else {
+          cookies = {
+            user: user
+          }
+        } 
+        res.cookie('cookies', cookies, cookieOptions); 
+        return res.render('profile', {messages: "Google Login Success", username: user.username, password: user.password,
+          email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
+      } 
+    });
+  }
 }
 
   // show login form
@@ -148,6 +209,32 @@ getIndex = (req, res, next) => {
 
 // get profile page
 getProfile = (req, res, next)=> {
+
+  console.log(req.signedCookies.cookies);
+  
+  if(req.signedCookies.cookies.user === undefined | req.signedCookies.cookies.user === null){
+    res.render('index', {messages: 'Please login to see profile page.'}); 
+  }
+
+  else {
+    console.log(req.signedCookies.cookies.user);
+    const user_id = req.signedCookies.cookies.user._id.toString();
+    Users.find({ "_id":  user_id}, function(err, user) {
+      if(err)
+      {
+          return console.error(err);
+      }
+      else
+      {
+        user = user[0];
+        res.render("profile", {messages: "User Updated successfully!!!", username: user.username, password: user.password,
+            email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
+      }
+    });
+ }
+}
+/*// get profile page
+getProfile = (req, res, next)=> {
   console.log(req.signedCookies.cookies.user._id);
   const user_id = req.signedCookies.cookies.user._id.toString();
 
@@ -167,7 +254,7 @@ getProfile = (req, res, next)=> {
           email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
     }
   });
-}
+}*/
 
 //Exporting Functions Calls
 module.exports.getLogin = getLogin
