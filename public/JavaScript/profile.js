@@ -7,6 +7,9 @@ function updateProfile() {
 
 let usernameDiv = document.getElementById("username-para");
 let usernameText = usernameDiv.innerText.split(":")[1].trim();
+
+let passwordDiv = document.getElementById("pwd-para");
+let passwordText = passwordDiv.innerText.split(":")[1].trim();
             
 // Create a form dynamically
 var form = document.createElement("form");
@@ -26,6 +29,12 @@ EID.setAttribute("type", "email");
 EID.setAttribute("name", "email");
 EID.setAttribute("placeholder", "E-Mail ID");
 EID.setAttribute("required", true);
+
+var password = document.createElement("input");
+password.setAttribute("type", "password");
+password.setAttribute("name", "password");
+password.setAttribute("required", true);
+password.setAttribute("value", passwordText);
 
 // Create an radio element for userType student
 var radioboxStudent = document.createElement('input');
@@ -79,6 +88,10 @@ form.appendChild(br.cloneNode());
 
 // Append the emailID to the form
 form.appendChild(EID);
+form.appendChild(br.cloneNode());
+
+// Append the emailID to the form
+form.appendChild(password);
 form.appendChild(br.cloneNode());
     
 // Append the Phone number to the form
