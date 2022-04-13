@@ -14,8 +14,17 @@ let Calender  = calender.Calender;
 //Getting the Calender Page
 getCalender= (req, res, next) => {
     
+  let user_id = '';
+
+  try{
     console.log(req.signedCookies.cookies.user._id);
-    const user_id = req.signedCookies.cookies.user._id.toString();
+    user_id = req.signedCookies.cookies.user._id.toString(); 
+  }
+  
+  catch(e){
+    console.log('Unknown user');
+    return res.render('index', {messages: ''});
+  }
 
     Calender.find({ "userid":  user_id}, function(err, calender) {
       if(err)
@@ -80,6 +89,18 @@ postdeleteCalender = (req, res, next) => {
 }  
 
 getFinder = (req, res) => {
+  let user_id = '';
+
+  try{
+    console.log(req.signedCookies.cookies.user._id);
+    user_id = req.signedCookies.cookies.user._id.toString(); 
+  }
+  
+  catch(e){
+    console.log('Unknown user');
+    return res.render('index', {messages: ''});
+  }
+  
   res.render('calenderFinder', { messages: 'finder' });
 }
 
@@ -98,6 +119,19 @@ postFinder = (req, res) => {
 }
 
 getCrud = (req, res) => {
+  
+  let user_id = '';
+
+  try{
+    console.log(req.signedCookies.cookies.user._id);
+    user_id = req.signedCookies.cookies.user._id.toString(); 
+  }
+  
+  catch(e){
+    console.log('Unknown user');
+    return res.render('index', {messages: ''});
+  }
+  
   res.render('calenderCrud', { messages: 'crud' });
 }
 
@@ -143,6 +177,18 @@ postCrud = (req, res) => {
 }
 
 getMenu = (req, res) => {
+  let user_id = '';
+
+  try{
+    console.log(req.signedCookies.cookies.user._id);
+    user_id = req.signedCookies.cookies.user._id.toString(); 
+  }
+  
+  catch(e){
+    console.log('Unknown user');
+    return res.render('index', {messages: ''});
+  }
+  
   res.render('calendermenu', { messages: 'menu' });
 }
 
