@@ -247,7 +247,7 @@ getProfile = (req, res, next)=> {
           email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
     }
   });
-}*/
+}
 
 //Exporting Functions Calls
 module.exports.getLogin = getLogin
