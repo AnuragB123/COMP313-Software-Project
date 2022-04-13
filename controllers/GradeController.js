@@ -17,11 +17,19 @@ let user = require('../models/user');
 // show teacher grader form, need to figure out how to pass the list of student users (need to work with Vaishali/Arpit)
 getGraderPage = (req, res)=> {
   //Filter users who are user type student and then put them into a list and then pass this list as a paarameter... into the res.render
-  let cookies = req.signedCookies.cookies;
-  let user = cookies.user;
-  if(!user){
-    res.render('index', {messages: 'Please login as a teacher to see students data.'});
+  let user;
+
+  try{
+    console.log(req.signedCookies.cookies.user._id);
+    user = req.signedCookies.cookies.user; 
   }
+  
+  catch(e){
+    console.log('Unknown user');
+    return res.render('index', {messages: ''});
+  }
+  
+
   if(user.userType == 'teacher'){
     getTeacherGraderPage(req, res);
   } else {
@@ -35,6 +43,18 @@ getGraderPage = (req, res)=> {
 
 getTeacherGraderPage = (req, res)=> {
   //Filter users who are user type student and then put them into a list and then pass this list as a paarameter... into the res.render
+  let user = '';
+
+  try{
+    console.log(req.signedCookies.cookies.user._id);
+    user = req.signedCookies.cookies.user; 
+  }
+  
+  catch(e){
+    console.log('Unknown user');
+    return res.render('index', {messages: ''});
+  }
+  
   const User = user.User;
   User.find({ userType: 'student' })
     .then(users => {
@@ -51,11 +71,19 @@ getTeacherGraderPage = (req, res)=> {
 getStudentGraderPage = (req, res)=> {
   //Grader object of userid (user logged in)
   const Grade = grade.Grade;
-  let cookies = req.signedCookies.cookies;
-  let user = cookies.user;
-  if(!user){
-    res.render('index', {messages: 'There was some issue while fetching student details.'});
+  
+  let user;
+
+  try{
+    console.log(req.signedCookies.cookies.user._id);
+    user = req.signedCookies.cookies.user; 
   }
+  
+  catch(e){
+    console.log('Unknown user');
+    return res.render('index', {messages: ''});
+  }
+
   console.log(user._id);
   if(Grade){
     Grade.find({ userid: user._id })
@@ -73,6 +101,19 @@ getStudentGraderPage = (req, res)=> {
 }
 // function to get Grades
 getGrades= (req, res, next) => {
+    
+  let user = '';
+
+  try{
+    console.log(req.signedCookies.cookies.user._id);
+    user = req.signedCookies.cookies.user; 
+  }
+  
+  catch(e){
+    console.log('Unknown user');
+    return res.render('index', {messages: ''});
+  }
+
     let uid = req.params.userid;
 
     grade.find({userid : uid},(err, gradesList) => {

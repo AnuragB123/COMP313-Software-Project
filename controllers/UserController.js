@@ -160,11 +160,11 @@ getIndex = (req, res, next) => {
 // get profile page
 getProfile = (req, res, next)=> {
   
-  const user_id = '';
+  let user_id = '';
 
   try{
     console.log(req.signedCookies.cookies.user._id);
-    req.signedCookies.cookies.user._id.toString(); 
+    user_id = req.signedCookies.cookies.user._id.toString(); 
   }
   
   catch(e){
