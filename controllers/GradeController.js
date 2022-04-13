@@ -1,6 +1,7 @@
 /*
 Developers who contributed to this file:
 Vaishali 
+Arpit
 */
 //Third party libraries
 let express = require('express');
@@ -27,7 +28,7 @@ getGraderPage = (req, res)=> {
     if(user.userType == 'student'){
       getStudentGraderPage(req, res);
     } else {
-      res.render('teacherGrader', {messages: 'Error'}); 
+      res.render('teacherGrader', {messages: 'Error'});
     }
   }
 }
