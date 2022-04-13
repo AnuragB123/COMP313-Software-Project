@@ -43,11 +43,11 @@ getGraderPage = (req, res)=> {
 
 getTeacherGraderPage = (req, res)=> {
   //Filter users who are user type student and then put them into a list and then pass this list as a paarameter... into the res.render
-  let user = '';
+  let user_cookie = '';
 
   try{
     console.log(req.signedCookies.cookies.user._id);
-    user = req.signedCookies.cookies.user; 
+    user_cookie = req.signedCookies.cookies.user; 
   }
   
   catch(e){
