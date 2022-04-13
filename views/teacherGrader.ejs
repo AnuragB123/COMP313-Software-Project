@@ -1,16 +1,45 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/public/assets/styles.css"/>
-<script src="../public/JavaScript/teacherGrader.js"></script>
+<script>
+    function saveGrade() {
+        document.getElementById('graderForm').style.display = 'block';
+        var select = document.getElementById('student-name');
+        var student = select.options[select.selectedIndex];
+        document.getElementById('studentName').value = student.text;
+    }
+</script>
 <title>Teacher Grader Page</title>
 <div>
     <%- include('partials/navbar') %>
 </div>
+<h1>Here you will insert grades for your students</h1>
 <div class="main-content">
-    <h1>Here you will insert grades for your students</h1>
-    <label>Student Name: <%= students %></label>
-    
+    <select id="student-name">
+        <% for (const i in students) { %>
+            <option value="<%= students[i].username %>"> <%= students[i].username %>
+            </option>
+            <% } %>
+    </select>
+    <button type="button" value="Save Grade" onclick="saveGrade()">Save Grade</button>
+    </div>
+    <br/>
+    <form name="graderForm" id="graderForm" action="#" method="post">
+        <p>Student Name: </p>
+        <input type="text" id="studentName" readonly>
+        <p>Student Course:</p>
+        <input type="text" id="studentCourse" name="studentCourse" placeholder="Enter Course Name" required>
+        <p>Student Grade:</p>
+        <input type="text" id="studentGrade" name="studentGrade" placeholder="Enter Grade" required>
+        <p>Student Mark</p>
+        <input type="number" id="studentMark" name="studentMark" placeholder="Enter Mark" required>
+        <br/>
+        <br/>
+        <button type="submit" id="submit" value="Submit">Add Grade</button>
+    </form>
 </div>
+
+
 <div>
     <%- include('partials/footer') %>
 </div>

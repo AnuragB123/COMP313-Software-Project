@@ -61,7 +61,7 @@ getTeacherGraderPage = (req, res)=> {
       if (!users) {
        return res.render("teacherGrader", {students: {}, messages : "Welcome to teacher Dashboard"});
       }
-    res.render('teacherGrader', {students: users}); 
+    res.render('teacherGrader', {'students': users}); 
   })
 
 }
