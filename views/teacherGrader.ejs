@@ -1,14 +1,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/public/assets/styles.css"/>
-<script>
-    function saveGrade() {
-        document.getElementById('graderForm').style.display = 'block';
-        var select = document.getElementById('student-name');
-        var student = select.options[select.selectedIndex];
-        document.getElementById('studentName').value = student.text;
-    }
-</script>
+<script src="../public/JavaScript/teacherGrader.js"></script>
 <title>Teacher Grader Page</title>
 <div>
     <%- include('partials/navbar') %>
