@@ -166,18 +166,29 @@ updateUsers= (req, res, next) => {
   let userType = req.body.userType;
   let phone = req.body.phone;
   let isTutor = req.body.isTutor;
+  let newPasswordText = password;
 
   console.log(req.body);
 
+  let update;
+
+  bcrypt.hash(password, 10).then(hash => {
+    password = hash
+  });
+
+  update = { $set: {    // <-- set stage
+    username : username,
+    email : email,
+    password : password,
+    userType : userType,
+    phone : phone,
+    isTutor : isTutor
+  }};
+
+  console.log("update : " + update.$set.password);
+
   let query = {username: username};  // <-- find stage
-  let update = { $set: {    // <-- set stage
-      username : username,
-      email : email,
-      password : password,
-      userType : userType,
-      phone : phone,
-      isTutor : isTutor
-    }};
+  
   let options = {
     "upsert": false
  };
@@ -186,7 +197,7 @@ updateUsers= (req, res, next) => {
     if(result.matchedCount && result.modifiedCount) {
       console.log(`User Updated successfully!!!`);
     }
-    res.render("profile", {messages: "User Updated successfully!!!", username: username, password: password,
+    res.render("profile", {messages: "User Updated successfully!!!", username: username, password: newPasswordText,
           email: email, userType: userType, phone: phone, isTutor: isTutor});
     })
     .catch(err => console.error(`Failed to update user: ${err}`))
@@ -210,34 +221,16 @@ getIndex = (req, res, next) => {
 // get profile page
 getProfile = (req, res, next)=> {
 
-  console.log(req.signedCookies.cookies);
-  
-  if(req.signedCookies.cookies.user === undefined | req.signedCookies.cookies.user === null){
-    res.render('index', {messages: 'Please login to see profile page.'}); 
+  try{
+    console.log(req.signedCookies.cookies.user._id);
+    user_id = req.signedCookies.cookies.user._id.toString(); 
   }
-
-  else {
-    console.log(req.signedCookies.cookies.user);
-    const user_id = req.signedCookies.cookies.user._id.toString();
-    Users.find({ "_id":  user_id}, function(err, user) {
-      if(err)
-      {
-          return console.error(err);
-      }
-      else
-      {
-        user = user[0];
-        res.render("profile", {messages: "User Updated successfully!!!", username: user.username, password: user.password,
-            email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
-      }
-    });
- }
-}
-/*// get profile page
-getProfile = (req, res, next)=> {
-  console.log(req.signedCookies.cookies.user._id);
-  const user_id = req.signedCookies.cookies.user._id.toString();
-
+  
+  catch(e){
+    console.log('Unknown user');
+    return res.render('index', {messages: ''});
+  }
+ 
   if(!user_id || user_id === null){
     res.render('index', {messages: 'Please login to see profile page.'}); 
   }

@@ -8,13 +8,11 @@
 </div>
 <div class="main-content">
     <h1>Here you will insert grades for your students</h1>
-    <%- include('partials/error') %>
-
-    <label>Student Name: </label>
+    <label>Student Name: <%= students %></label>
     <!--
     <select id="student-name">
-        <% for (const i in studentList) { %>
-        <option value="<%= studentList[i].userId %>"> <%= studentList[i].userName %> </option>
+        <% for (const i in students) { %>
+        <option value="<%= students[i].userId %>"> <%= students[i].userName %> </option>
         <% } %>
     </select>-->
     <button onClick="addStudentGrades()" id="btnStudentGrades">Add Grades</button>
