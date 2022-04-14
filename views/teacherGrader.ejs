@@ -10,7 +10,7 @@
 <div class="main-content">
     <select id="student-name">
         <% for (const i in students) { %>
-            <option value="<%= students[i].username %>"> <%= students[i].username %>
+            <option value="<%= students[i]._id %>"> <%= students[i].username %>
             </option>
             <% } %>
     </select>
@@ -18,6 +18,8 @@
     </div>
     <br/>
     <form name="graderForm" id="graderForm" action="#" method="post">
+        <p>Student ID</p>
+        <input type="hidden" id="studentId" readonly>
         <p>Student Name: </p>
         <input type="text" id="studentName" readonly>
         <p>Student Course:</p>
