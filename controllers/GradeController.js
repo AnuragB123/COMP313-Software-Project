@@ -91,10 +91,15 @@ getStudentGraderPage = (req, res)=> {
       if (!grades) {
        return res.render("studentGrader", {students: {}, messages : "No grades found."});
       }
-      res.render('studentGrader', {grades: grades});
+      let avg = 0;
+      for(let i = 0 ; i < grades.length ; i++){
+        avg = avg + grades[i].marks;
+      }
+      avg = avg / grades.length;
+      res.render('studentGrader', {grades: grades, avg : avg.toFixed(2)});
     })
   } else {
-    console.log("grade table not found.")
+    console.log("grade table not found.");
 
   }
   
@@ -163,25 +168,18 @@ updateGrade = (req, res, next) => {
 
   // function to insert Grade into DB
 addGrade= (req, res, next) => {
-    
-    let newgrade = grade({
+    console.log(req.body);
+    let newgrade = new grade.Grade({
       userid: req.body.userid,
-      courseName: req.body.courseName,
-      grade: req.body.grade,
-      marks: req.body.marks
+      courseName: req.body.studentCourse,
+      grade: req.body.studentGrade,
+      marks: req.body.studentMark
     });
   
-    grade.create(newgrade, (err, grade) =>{
-      if(err)
-      {
-          console.log(err);
-          res.end(err);
-      }
-      else
-      {
-        res.render('grader', { messages: 'Grader' });
-      }
-  });
+    newgrade.save(function (err, book) {
+      if (err) return console.error(err);
+      console.log("A new grade created.");
+    });
   }
 
   //Exporting functions
