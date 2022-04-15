@@ -17,9 +17,9 @@
     <button type="button" value="Save Grade" onclick="saveGrade()">Save Grade</button>
     </div>
     <br/>
-    <form name="graderForm" id="graderForm" action="#" method="post">
+    <form name="graderForm" id="graderForm" action="/grader/addGrade" method="post">
         <p>Student ID</p>
-        <input type="hidden" id="studentId" readonly>
+        <input type="text" id="studentId" name="studentId" readonly>
         <p>Student Name: </p>
         <input type="text" id="studentName" readonly>
         <p>Student Course:</p>
