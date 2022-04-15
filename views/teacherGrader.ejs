@@ -25,16 +25,15 @@
         <p>Student Course:</p>
         <input type="text" id="studentCourse" name="studentCourse" placeholder="Enter Course Name" required>
         <p>Student Grade:</p>
-        <input type="text" id="studentGrade" name="studentGrade" placeholder="Enter Grade" required>
+        <input type="text" id="studentGrade" name="studentGrade" placeholder="Enter Grade"  readonly required>
         <p>Student Mark</p>
-        <input type="number" id="studentMark" name="studentMark" placeholder="Enter Mark" required>
+        <input type="number" id="studentMark" name="studentMark" placeholder="Enter Mark" min="1" max="100" required onchange="setGrade()">
         <br/>
         <br/>
         <button type="submit" id="submit" value="Submit">Add Grade</button>
+        <button type="reset" id="reset" value="Reset">Reset</button>
     </form>
 </div>
-
-
 <div>
     <%- include('partials/footer') %>
 </div>
