@@ -170,7 +170,7 @@ updateGrade = (req, res, next) => {
 addGrade= (req, res, next) => {
     console.log(req.body);
     let newgrade = new grade.Grade({
-      userid: req.body.userid,
+      userid: req.body.studentId,
       courseName: req.body.studentCourse,
       grade: req.body.studentGrade,
       marks: req.body.studentMark
@@ -178,7 +178,8 @@ addGrade= (req, res, next) => {
   
     newgrade.save(function (err, book) {
       if (err) return console.error(err);
-      console.log("A new grade created.");
+      console.log("Grade added successfully.");
+      getTeacherGraderPage(req, res);
     });
   }
 
