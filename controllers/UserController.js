@@ -3,6 +3,7 @@ Developers who contributed to this file:
 Vaishali
 Arpit
 Anurag 
+Prajwal
 */
 
 //third party libraries
@@ -25,15 +26,17 @@ getLogin = (req, res)=> {
 
 // process login form
 postLogin = (req, res)=> {
-  
-  const {username, password}= req.body;
-  console.log(username, password);
-
-  let fetchedUser;
+  /*if(!req.body.value.id_token){
+    console.log("error");
+  }*/
+  if(req.body.value  === undefined){
+    const {username, password}= req.body;
+    console.log(username, password);
+    let fetchedUser;
     Users.findOne({ username: username })
     .then(user => {
       if (!user) {
-       return res.render("index", {messages: "Login Fail"});
+        return res.render("index", {messages: "Login Fail"});
       }
 
       fetchedUser = user;
@@ -45,14 +48,13 @@ postLogin = (req, res)=> {
         }
         if(data){
           let cookies = req.signedCookies.cookies;
-            if (cookies) {
-                cookies.user = user
-            } else {
-                cookies = {
-                    user: user
-                }
-            }
-          
+          if (cookies) {
+              cookies.user = user
+          } else {
+              cookies = {
+                  user: user
+              }
+          }          
           res.cookie('cookies', cookies, cookieOptions);  
           return res.render("profile", {messages: "Login Success", username: username, password: password,
           email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
@@ -60,8 +62,67 @@ postLogin = (req, res)=> {
           return res.render("index", {messages: "Login Fail"});
         }
       });
+    });
+  }
 
-  })
+  else{
+    const{id_token, data} = req.body.value;
+    let fetchedUser;
+    Users.findOne({ email: data.email })
+    .then(user => {
+      if(!user) {
+        const password = id_token;
+        bcrypt.hash(password, 10).then(hash => {
+          const gUser = new Users({
+            username: data.name,
+            phone: data.phone,
+            email: data.email,
+            isTutor: "null",
+            userType: "null",
+            password: hash
+          });
+          gUser.save()
+          .then( () => {
+            user = gUser;
+            console.log(`1: ${user}`);
+            let cookies = req.signedCookies.cookies;
+            if (cookies) {
+              cookies.user = user
+            } else {
+              cookies = {
+                user: user
+              }
+            } 
+            res.cookie('cookies', cookies, cookieOptions); 
+            return res.render('profile', {messages: "Google Login Success", username: user.username, password: user.password,
+              email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});         
+          })
+          .catch(err => {
+            res.status(500).json({
+              error: err
+            });
+          });        
+        });
+      }
+      console.log(`2: ${user}`); 
+      if(user){
+        console.log(`3: ${user}`); 
+        fetchedUser = user;
+        console.log(fetchedUser);
+        let cookies = req.signedCookies.cookies;
+        if (cookies) {
+          cookies.user = user
+        } else {
+          cookies = {
+            user: user
+          }
+        } 
+        res.cookie('cookies', cookies, cookieOptions); 
+        return res.render('profile', {messages: "Google Login Success", username: user.username, password: user.password,
+          email: user.email, userType: user.userType, phone: user.phone, isTutor: user.isTutor});
+      } 
+    });
+  }
 }
 
   // show login form
@@ -105,18 +166,29 @@ updateUsers= (req, res, next) => {
   let userType = req.body.userType;
   let phone = req.body.phone;
   let isTutor = req.body.isTutor;
+  let newPasswordText = password;
 
   console.log(req.body);
 
+  let update;
+
+  bcrypt.hash(password, 10).then(hash => {
+    password = hash
+  });
+
+  update = { $set: {    // <-- set stage
+    username : username,
+    email : email,
+    password : password,
+    userType : userType,
+    phone : phone,
+    isTutor : isTutor
+  }};
+
+  console.log("update : " + update.$set.password);
+
   let query = {username: username};  // <-- find stage
-  let update = { $set: {    // <-- set stage
-      username : username,
-      email : email,
-      password : password,
-      userType : userType,
-      phone : phone,
-      isTutor : isTutor
-    }};
+  
   let options = {
     "upsert": false
  };
@@ -125,7 +197,7 @@ updateUsers= (req, res, next) => {
     if(result.matchedCount && result.modifiedCount) {
       console.log(`User Updated successfully!!!`);
     }
-    res.render("profile", {messages: "User Updated successfully!!!", username: username, password: password,
+    res.render("profile", {messages: "User Updated successfully!!!", username: username, password: newPasswordText,
           email: email, userType: userType, phone: phone, isTutor: isTutor});
     })
     .catch(err => console.error(`Failed to update user: ${err}`))
@@ -148,9 +220,17 @@ getIndex = (req, res, next) => {
 
 // get profile page
 getProfile = (req, res, next)=> {
-  console.log(req.signedCookies.cookies.user._id);
-  const user_id = req.signedCookies.cookies.user._id.toString();
 
+  try{
+    console.log(req.signedCookies.cookies.user._id);
+    user_id = req.signedCookies.cookies.user._id.toString(); 
+  }
+  
+  catch(e){
+    console.log('Unknown user');
+    return res.render('index', {messages: ''});
+  }
+ 
   if(!user_id || user_id === null){
     res.render('index', {messages: 'Please login to see profile page.'}); 
   }

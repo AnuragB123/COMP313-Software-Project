@@ -1,0 +1,39 @@
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/public/assets/styles.css"/>
+<script src="../public/JavaScript/teacherGrader.js"></script>
+<title>Teacher Grader Page</title>
+<div>
+    <%- include('partials/navbar') %>
+</div>
+<h1>Here you will insert grades for your students</h1>
+<div class="main-content">
+    <select id="student-name">
+        <% for (const i in students) { %>
+            <option value="<%= students[i]._id %>"> <%= students[i].username %>
+            </option>
+            <% } %>
+    </select>
+    <button type="button" value="Save Grade" onclick="saveGrade()">Save Grade</button>
+    </div>
+    <br/>
+    <form name="graderForm" id="graderForm" action="/grader/addGrade" method="post">
+        <p>Student ID</p>
+        <input type="text" id="studentId" name="studentId" readonly>
+        <p>Student Name: </p>
+        <input type="text" id="studentName" readonly>
+        <p>Student Course:</p>
+        <input type="text" id="studentCourse" name="studentCourse" placeholder="Enter Course Name" required>
+        <p>Student Grade:</p>
+        <input type="text" id="studentGrade" name="studentGrade" placeholder="Enter Grade"  readonly required>
+        <p>Student Mark</p>
+        <input type="number" id="studentMark" name="studentMark" placeholder="Enter Mark" min="1" max="100" required onchange="setGrade()">
+        <br/>
+        <br/>
+        <button type="submit" id="submit" value="Submit">Add Grade</button>
+        <button type="reset" id="reset" value="Reset">Reset</button>
+    </form>
+</div>
+<div>
+    <%- include('partials/footer') %>
+</div>

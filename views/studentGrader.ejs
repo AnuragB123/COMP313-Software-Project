@@ -1,0 +1,31 @@
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/public/assets/styles.css"/>
+<title>Student Grader Page</title>
+<div>
+    <%- include('partials/navbar') %>
+</div>
+<div>
+    <h1>My Grades:</h1>
+    <% if(grades!=null) { %>
+        <table>
+            <tr>
+                <th>Course Name</th>
+                <th>Grade</th>
+                <th>Mark</th>
+            </tr>
+            <% grades.forEach(function(grade){ %>
+            <tr>
+                <td><%= grade.courseName%></td>
+                <td><%= grade.grade%></td>
+                <td><%= grade.marks%></td>
+            </tr>
+        <% }) %>
+        </table>
+    <% } %>
+    <p>Average: <%= avg%></p>
+    
+</div>
+<div>
+    <%- include('partials/footer') %>
+</div>

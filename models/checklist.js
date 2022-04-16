@@ -15,5 +15,5 @@ const Checklist = mongoose.Schema({
           collection: "Checklist"
       }
   );
-  //Exporting the Checklist model
+//Exporting the Checklist model
 module.exports.Checklist = mongoose.model("Checklist", Checklist);
