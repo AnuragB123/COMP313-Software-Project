@@ -9,7 +9,7 @@ var tutorController = require('../controllers/TutorController');
 var express = require('express');
 var router = express.Router();
 //Routers for different pages regarding Checklist
-router.get('/get', tutorController.getTutor);
+router.get('/getTutor', tutorController.getTutor);
 router.post('/insert', tutorController.insertMeeting);
 
 //Export Functions

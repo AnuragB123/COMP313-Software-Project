@@ -35,7 +35,10 @@ getTutor = (req, res, next) => {
             else
             {
                 console.log(allstudents);
-                return res.render('tutor', {messages: '' , "meetingList": [], "allstudents": allstudents, "alltutors": [], "isTutor": user_obj.isTutor}); 
+                return res.render('tutorView', {messages: '' , meetingList : [], allstudents : allstudents, isTutor : user_obj.isTutor}); 
+
+               
+
           }
         });
       }
@@ -48,6 +51,11 @@ getTutor = (req, res, next) => {
             }
             else
             {
+
+                console.log(meetingList);
+                let allTutors = ["abcd1","abcd2", "abcd3"];
+                return res.render('tuteeView', {messages: '' , meetingList: meetingList, allTutors: allTutors}); 
+
                 Users.find({ "isTutor": 'yes', "userType": "student"}, {_id:1, username: 1}, function(err, alltutors) {
                     if(err)
                     {
@@ -81,7 +89,10 @@ insertMeeting= (req, res) => {
     console.log(req.body.meeting);
     var ObjectId = require('mongodb').ObjectId;
     
+
+=======
     let query = {_id: ObjectId(user_id)};  // <-- find stage
+
 
     let update = { $push: {    // <-- set stage
         "Meeting": req.body.meeting
@@ -93,7 +104,7 @@ insertMeeting= (req, res) => {
 
     Users.updateOne(query, update, options).then(result =>{
           console.log("new meet inserted");
-          res.render("tutor", {success: true, messages: 'Successfully added meeting', "meetingList": [], "allstudents": [], "isTutor": "no"});
+          res.render("tuteeView", {success: true, messages: 'Successfully added meeting', meetingList: [], allstudents: [], isTutor: "no"});
         
     }).catch(err => console.error(err));
 }

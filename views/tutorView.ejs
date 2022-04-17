@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/assets/styles.css"/>
+    <script src="../public/JavaScript/tutor.js"></script>
+    <title>Tutor Page</title>
+</head>
+<body>
+<div>
+      <%- include('partials/navbar') %>
+</div>
+      <div class="row">
+            <div class="offset-md-3 col-md-6 col-sm-12">
+                  <div class="profile" id="main-content">
+                  <h2>Tutor</h2>
+      
+                        <div id="tutorPage">
+                              <p>Welcome to the tutor page.</p>
+                              <p id="meetingList-para">User Name : <%= meetingList %></p>
+                              <p id="allStudents-para">Password : <%= allStudents %></p>
+                        </div>
+
+                        <button onClick="updateProfile()" id="btnUpdateProfile">Update my profile</button>
+                        <p id="profileForm"></p>
+                  </div>
+            
+            </div>
+      </div>
+<div>
+      <%- include('partials/footer') %>
+</div>
+</body>
+</html>

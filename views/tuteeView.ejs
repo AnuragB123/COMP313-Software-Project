@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/assets/styles.css"/>
+    <script src="../public/JavaScript/tutor.js"></script>
+    <title>Tutor Page</title>
+</head>
+<body>
+<div>
+      <%- include('partials/navbar') %>
+</div>
+      <div class="row">
+            <div class="offset-md-3 col-md-6 col-sm-12">
+                  <div class="profile" id="main-content">
+                        <% if(messages.length > 0) { %>
+                            <div id="messageArea" class="alert alert-danger">
+                              <%= messages %>
+                            </div>
+                          <% } %>
+                          <p></p>
+                          <%- include('partials/error') %>
+                          <form method="POST" id="tuteeForm" action="/tutorial/insert">
+                            <h1 class="hint-text">Want to get Tutoring?</h1>
+                            <p class="lead"><i class="fas fa-user-shield"></i>Please enter details regarding meeting here:</p>
+                            
+                            <label for="tutors">Choose a tutor:</label><br>
+                            <select name="tutors" id="tutors" size="3">
+                            <% allTutors.forEach(function(tutor){ %>
+                                    <option value='<%= tutor %>'><%= tutor %></option>
+                            <% }) %>
+                            </select><br>
+                            <input type="text" class="form-control" id="course-name" name="course-name" placeholder="Course Name" required><br>
+                            <input type="text" class="form-control" id="meeting-title" name="meeting-title" placeholder="Please enter meeting title here" required><br>
+                            <textarea id="meeting-link" name="meeting-link" rows="7" cols="70">Please find the link for the zoom meeting below: https://us04web.zoom.us/j/3040067808?pwd=SVVtNnN0VEN6OU5OaElGdGw3YTJLUT09 Meeting ID: 304 006 7808 Passcode: HqB9ws
+                            </textarea><br>
+                            <label for="appt">Choose a time for your meeting:</label><br>
+                            
+                                <input type="time" id="appt" name="appt" min="09:00" max="21:00" required><br>
+                            <small>Office hours are 9am to 9pm</small><br>
+
+                            <div class="text-end">
+                              <button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
+                              <button id="cancelButton" type="reset" class="btn btn-warning"><i class="fas fa-undo fa-lg"></i> Reset</button>
+                            </div>
+                          </form>
+                         
+                  </div>
+            
+            </div>
+      </div>
+<div>
+      <%- include('partials/footer') %>
+</div>
+</body>
+</html>
