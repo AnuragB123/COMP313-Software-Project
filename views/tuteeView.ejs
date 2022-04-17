@@ -28,8 +28,8 @@
                             
                             <label for="tutors">Choose a tutor:</label><br>
                             <select name="tutors" id="tutors" size="3">
-                            <% allTutors.forEach(function(tutor){ %>
-                                    <option value='<%= tutor %>'><%= tutor %></option>
+                            <% alltutors.forEach(function(tutor){ %>
+                                    <option value='<%= tutor %>'><%= tutor.username %></option>
                             <% }) %>
                             </select><br>
                             <input type="text" class="form-control" id="course-name" name="course-name" placeholder="Course Name" required><br>

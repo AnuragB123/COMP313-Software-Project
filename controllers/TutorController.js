@@ -60,7 +60,7 @@ getTutor = (req, res, next) => {
                     {
                         console.log(alltutors);
                         console.log(meetingList);
-                        return res.render('tutor', {messages: '' , "meetingList": meetingList, "allstudents": [], "alltutors": alltutors , "isTutor": user_obj.isTutor}); 
+                        return res.render('tuteeView', {messages: '' , "meetingList": meetingList, "allstudents": [], "alltutors": alltutors , "isTutor": user_obj.isTutor}); 
                   }
                 }); 
             }
