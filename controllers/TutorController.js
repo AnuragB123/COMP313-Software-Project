@@ -36,7 +36,7 @@ getTutor = (req, res, next) => {
             else
             {
                 console.log(tutormeetings);
-                return res.render('tutorView', {messages: '' , meetingList : tutormeetings, "allstudents" : [], "alltutors": [] ,isTutor : user_obj.isTutor});
+                return res.render('tutorView', {messages: '' , meetingList : tutormeetings, allstudents : [], alltutors: [] ,isTutor : user_obj.isTutor});
             }
         });
       }
