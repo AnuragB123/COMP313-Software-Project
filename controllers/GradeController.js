@@ -14,9 +14,8 @@ let grade  = require('../models/grade');
 let user = require('../models/user');
 
 //-----------------------------------------------------Grade operations--------------------------------------------------------
-// show teacher grader form, need to figure out how to pass the list of student users (need to work with Vaishali/Arpit)
+//Get Grader Page Conditional based on User Type
 getGraderPage = (req, res)=> {
-  //Filter users who are user type student and then put them into a list and then pass this list as a paarameter... into the res.render
   let user;
 
   try{
@@ -41,8 +40,8 @@ getGraderPage = (req, res)=> {
   }
 }
 
+//Teacher Grader Page
 getTeacherGraderPage = (req, res)=> {
-  //Filter users who are user type student and then put them into a list and then pass this list as a paarameter... into the res.render
   let user_cookie = '';
 
   try{
@@ -104,6 +103,7 @@ getStudentGraderPage = (req, res)=> {
   }
   
 }
+
 // function to get Grades
 getGrades= (req, res, next) => {
     
@@ -133,38 +133,38 @@ getGrades= (req, res, next) => {
   });
   }
   
-// function to delete Grades
-deleteGrade = (req, res, next) => {
-    let id = req.params.id;
+// // function to delete Grades
+// deleteGrade = (req, res, next) => {
+//     let id = req.params.id;
 
-    grade.remove({_id: id}, (err) => {
-        if(err)
-        {
-            console.log(err);
-            res.end(err);
-        }
-        else
-        {
-          res.render('grader', { messages: 'Grader' });
-        }
-    });
-}  
+//     grade.remove({_id: id}, (err) => {
+//         if(err)
+//         {
+//             console.log(err);
+//             res.end(err);
+//         }
+//         else
+//         {
+//           res.render('grader', { messages: 'Grader' });
+//         }
+//     });
+// }  
 
-// function to update a Grade
-updateGrade = (req, res, next) => {
-    let id = req.params.id
+// // function to update a Grade
+// updateGrade = (req, res, next) => {
+//     let id = req.params.id
   
-    grade.updateOne(
-      {_id: id},  // <-- find stage
-      { $set: {    // <-- set stage
-        userid: req.body.userid,
-        courseName: req.body.courseName,
-        grade: req.body.grade,
-        marks: req.body.marks
-        }}).then(result => {
-          res.render('grader', { messages: 'Grader' });
-    });
-  }
+//     grade.updateOne(
+//       {_id: id},  // <-- find stage
+//       { $set: {    // <-- set stage
+//         userid: req.body.userid,
+//         courseName: req.body.courseName,
+//         grade: req.body.grade,
+//         marks: req.body.marks
+//         }}).then(result => {
+//           res.render('grader', { messages: 'Grader' });
+//     });
+//   }
 
   // function to insert Grade into DB
 addGrade= (req, res, next) => {
@@ -186,6 +186,6 @@ addGrade= (req, res, next) => {
   //Exporting functions
   module.exports.getGraderPage = getGraderPage;
   module.exports.getGrades = getGrades;
-  module.exports.deleteGrade = deleteGrade;
-  module.exports.updateGrade = updateGrade;
+  //module.exports.deleteGrade = deleteGrade;
+  //module.exports.updateGrade = updateGrade;
   module.exports.addGrade = addGrade;

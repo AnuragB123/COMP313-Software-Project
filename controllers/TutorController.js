@@ -9,7 +9,7 @@ let express = require('express');
 let Usermodel = require('../models/user');
 let Users = Usermodel.User; 
 
-//Getting the Checklist Page
+//Getting the Tutor Page
 getTutor = (req, res, next) => {
     
     let user_obj = '';
@@ -68,6 +68,7 @@ getTutor = (req, res, next) => {
     }
 }  
 
+//Insert a Meeting
 insertMeeting= (req, res) => {
     let user_id = '';
 

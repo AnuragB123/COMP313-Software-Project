@@ -88,6 +88,7 @@ postdeleteCalender = (req, res, next) => {
     });
 }  
 
+//Finding a Calendar
 getFinder = (req, res) => {
   let user_id = '';
 
@@ -104,6 +105,7 @@ getFinder = (req, res) => {
   res.render('calenderFinder', { messages: 'finder' });
 }
 
+//Post Finding a Calender
 postFinder = (req, res) => {
   let id = req.body.calender;
   Calender.findById({ _id: id }, (err, calender) => {
@@ -118,6 +120,7 @@ postFinder = (req, res) => {
   });
 }
 
+//Creating a Calender
 getCrud = (req, res) => {
   
   let user_id = '';
@@ -135,6 +138,7 @@ getCrud = (req, res) => {
   res.render('calenderCrud', { messages: 'crud' });
 }
 
+//Post Creating a Calender
 postCrud = (req, res) => {
   for (x in req.body) {}
   if (x === "register")
@@ -176,6 +180,7 @@ postCrud = (req, res) => {
   res.render('calenderCrud', { messages: 'crud' });
 }
 
+//Calendar menu
 getMenu = (req, res) => {
   let user_id = '';
 
