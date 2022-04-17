@@ -1,5 +1,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/public/assets/styles.css"/>
 <title>Student Grader Page</title>
 <div>
     <%- include('partials/navbar') %>
@@ -14,7 +15,6 @@
                 <th>Mark</th>
             </tr>
             <% grades.forEach(function(grade){ %>
-            
             <tr>
                 <td><%= grade.courseName%></td>
                 <td><%= grade.grade%></td>
@@ -23,6 +23,7 @@
         <% }) %>
         </table>
     <% } %>
+    <p>Average: <%= avg%></p>
     
 </div>
 <div>

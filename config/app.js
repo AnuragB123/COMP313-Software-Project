@@ -1,4 +1,4 @@
-/*
+ /*
 Developers who contributed to this file:
 Vaishali 
 */
@@ -8,7 +8,7 @@ let createError = require('http-errors');
 let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
-let cors = require('cors');
+let cors = require('cors');  
 var passport = require('passport');
 var session = require('express-session')
 //Routers for Pages
@@ -26,7 +26,7 @@ let app = express();
 
 // database setup
 let mongoose = require('mongoose');
-let DB = require('./db');
+let DB = require('./db');  
 
 // point mongoose to the DB URI
 mongoose.connect(DB.URI, {useNewUrlParser: true, useUnifiedTopology: true});
