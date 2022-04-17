@@ -27,7 +27,7 @@ getTutor = (req, res, next) => {
     if (user_obj.isTutor.toLowerCase() == "yes"){
         console.log('in yes');
         console.log(user_obj._id);
-        Users.find({ "isTutor": 'no' }, {_id:1, username: 1}, function(err, allstudents) {
+        Users.find({ "isTutor": 'no', "userType": "student"}, {_id:1, username: 1}, function(err, allstudents) {
             if(err)
             {
                 return console.error(err);
@@ -35,7 +35,7 @@ getTutor = (req, res, next) => {
             else
             {
                 console.log(allstudents);
-                return res.render('tutor', {messages: '' , "meetingList": [], "allstudents": allstudents, "isTutor": user_obj.isTutor}); 
+                return res.render('tutor', {messages: '' , "meetingList": [], "allstudents": allstudents, "alltutors": [], "isTutor": user_obj.isTutor}); 
           }
         });
       }
@@ -48,31 +48,40 @@ getTutor = (req, res, next) => {
             }
             else
             {
-                console.log(meetingList);
-                return res.render('tutor', {messages: '' , "meetingList": meetingList, "allstudents": [], "isTutor": user_obj.isTutor}); 
+                Users.find({ "isTutor": 'yes', "userType": "student"}, {_id:1, username: 1}, function(err, alltutors) {
+                    if(err)
+                    {
+                        return console.error(err);
+                    }
+                    else
+                    {
+                        console.log(alltutors);
+                        console.log(meetingList);
+                        return res.render('tutor', {messages: '' , "meetingList": meetingList, "allstudents": [], "alltutors": alltutors , "isTutor": user_obj.isTutor}); 
+                  }
+                }); 
             }
         });
     }
 }  
 
 insertMeeting= (req, res) => {
-    // let user_id = '';
+    let user_id = '';
 
-    // try{
-    //     console.log(req.signedCookies.cookies.user._id);
-    //     user_id = req.signedCookies.cookies.user._id; 
-    // }
+    try{
+        console.log(req.signedCookies.cookies.user._id);
+        user_id = req.signedCookies.cookies.user._id; 
+    }
     
-    // catch(e){
-    //     console.log('Unknown user');
-    //     return res.render('index', {messages: ''});
-    // }
+    catch(e){
+        console.log('Unknown user');
+        return res.render('index', {messages: ''});
+    }
     
     console.log(req.body.meeting);
     var ObjectId = require('mongodb').ObjectId;
     
-    let id = "624749e1f06d08725f738f57"; 
-    let query = {_id: ObjectId(id)};  // <-- find stage
+    let query = {_id: ObjectId(user_id)};  // <-- find stage
 
     let update = { $push: {    // <-- set stage
         "Meeting": req.body.meeting
