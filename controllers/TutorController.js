@@ -83,7 +83,6 @@ insertMeeting= (req, res) => {
     
     console.log(req.body.meeting);
     var ObjectId = require('mongodb').ObjectId;
-
     
     let query = {_id: ObjectId(user_id)};  // <-- find stage
 
