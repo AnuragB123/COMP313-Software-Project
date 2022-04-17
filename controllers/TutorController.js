@@ -35,7 +35,7 @@ getTutor = (req, res, next) => {
             else
             {
                 console.log(allstudents);
-                return res.render('tutor', {messages: '' , "meetingList": [], "allstudents": allstudents, "isTutor": user_obj.isTutor}); 
+                return res.render('tutorView', {messages: '' , meetingList : [], allstudents : allstudents, isTutor : user_obj.isTutor}); 
           }
         });
       }
@@ -49,29 +49,29 @@ getTutor = (req, res, next) => {
             else
             {
                 console.log(meetingList);
-                return res.render('tutor', {messages: '' , "meetingList": meetingList, "allstudents": [], "isTutor": user_obj.isTutor}); 
+                let allTutors = ["abcd1","abcd2", "abcd3"];
+                return res.render('tuteeView', {messages: '' , meetingList: meetingList, allTutors: allTutors}); 
             }
         });
     }
 }  
 
 insertMeeting= (req, res) => {
-    // let user_id = '';
+    let user_id = '';
 
-    // try{
-    //     console.log(req.signedCookies.cookies.user._id);
-    //     user_id = req.signedCookies.cookies.user._id; 
-    // }
+    try{
+        console.log(req.signedCookies.cookies.user._id);
+        user_id = req.signedCookies.cookies.user._id; 
+    }
     
-    // catch(e){
-    //     console.log('Unknown user');
-    //     return res.render('index', {messages: ''});
-    // }
+    catch(e){
+        console.log('Unknown user');
+        return res.render('index', {messages: ''});
+    }
     
     console.log(req.body.meeting);
     var ObjectId = require('mongodb').ObjectId;
     
-    let id = "624749e1f06d08725f738f57"; 
     let query = {_id: ObjectId(id)};  // <-- find stage
 
     let update = { $push: {    // <-- set stage
@@ -84,7 +84,7 @@ insertMeeting= (req, res) => {
 
     Users.updateOne(query, update, options).then(result =>{
           console.log("new meet inserted");
-          res.render("tutor", {success: true, messages: 'Successfully added meeting', "meetingList": [], "allstudents": [], "isTutor": "no"});
+          res.render("tuteeView", {success: true, messages: 'Successfully added meeting', meetingList: [], allstudents: [], isTutor: "no"});
         
     }).catch(err => console.error(err));
 }
