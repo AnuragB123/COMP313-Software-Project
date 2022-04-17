@@ -27,19 +27,17 @@ getTutor = (req, res, next) => {
     if (user_obj.isTutor.toLowerCase() == "yes"){
         console.log('in yes');
         console.log(user_obj._id);
-        Users.find({ "isTutor": 'no', "userType": "student"}, {_id:1, username: 1}, function(err, allstudents) {
+
+        Users.find({'Meeting.tutorname': user_obj.username}, {username: 1, Meeting: 1}, function(err, tutormeetings) {
             if(err)
             {
                 return console.error(err);
             }
             else
             {
-                console.log(allstudents);
-                return res.render('tutorView', {messages: '' , meetingList : [], allstudents : allstudents, isTutor : user_obj.isTutor}); 
-
-               
-
-          }
+                console.log(tutormeetings);
+                return res.render('tutorView', {messages: '' , meetingList : tutormeetings, "allstudents" : [], "alltutors": [] ,isTutor : user_obj.isTutor});
+            }
         });
       }
     
@@ -51,10 +49,7 @@ getTutor = (req, res, next) => {
             }
             else
             {
-
                 console.log(meetingList);
-                let allTutors = ["abcd1","abcd2", "abcd3"];
-                return res.render('tuteeView', {messages: '' , meetingList: meetingList, allTutors: allTutors}); 
 
                 Users.find({ "isTutor": 'yes', "userType": "student"}, {_id:1, username: 1}, function(err, alltutors) {
                     if(err)
@@ -89,8 +84,6 @@ insertMeeting= (req, res) => {
     console.log(req.body.meeting);
     var ObjectId = require('mongodb').ObjectId;
     
-
-=======
     let query = {_id: ObjectId(user_id)};  // <-- find stage
 
 
