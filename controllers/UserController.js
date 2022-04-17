@@ -159,10 +159,10 @@ postRegistration = (req, res) => {
 }
 
 //Update User Information
-updateUsers= (req, res, next) => {
+updateUsers= async (req, res, next) => {
   let username = req.body.username;
   let email = req.body.email;
-  let password = req.body.password;
+  let password = '';
   let userType = req.body.userType;
   let phone = req.body.phone;
   let isTutor = req.body.isTutor;
@@ -171,10 +171,9 @@ updateUsers= (req, res, next) => {
   console.log(req.body);
 
   let update;
+  let newPassword;
 
-  bcrypt.hash(password, 10).then(hash => {
-    password = hash
-  });
+  password = await bcrypt.hash(req.body.password, 10);
 
   update = { $set: {    // <-- set stage
     username : username,
@@ -185,7 +184,7 @@ updateUsers= (req, res, next) => {
     isTutor : isTutor
   }};
 
-  console.log("update : " + update.$set.password);
+  console.log("update : " + update.$set);
 
   let query = {username: username};  // <-- find stage
   
@@ -196,9 +195,10 @@ updateUsers= (req, res, next) => {
   .then(result => {
     if(result.matchedCount && result.modifiedCount) {
       console.log(`User Updated successfully!!!`);
-    }
-    res.render("profile", {messages: "User Updated successfully!!!", username: username, password: newPasswordText,
+      res.render("profile", {messages: "Profile Updated successfully!!!", username: username, password: newPasswordText,
           email: email, userType: userType, phone: phone, isTutor: isTutor});
+    }
+    
     })
     .catch(err => console.error(`Failed to update user: ${err}`))
 }
