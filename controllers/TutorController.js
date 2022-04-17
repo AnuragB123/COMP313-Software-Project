@@ -97,7 +97,7 @@ insertMeeting= (req, res) => {
 
     Users.updateOne(query, update, options).then(result =>{
           console.log("new meet inserted");
-          res.render("tuteeView", {success: true, messages: 'Successfully added meeting', meetingList: [], allstudents: [], isTutor: "no"});
+          res.render("tuteeView", {success: true, messages: 'Successfully added meeting', meetingList: [], allstudents: [], isTutor: "no", alltutors: []});
         
     }).catch(err => console.error(err));
 }
