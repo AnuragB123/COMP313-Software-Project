@@ -71,10 +71,9 @@ app.use(express.static(path.join(__dirname, 'node_modules')));
 app.use('/', indexRouter)
 app.use('/user', userRouter)
 app.use('/checklist', checkListRouter)
-
 app.use('/calender', calenderRouter)
-app.use('/tutor', tutorRouter)
 app.use('/grader', graderRouter)
+app.use('/tutorial', tutorRouter)
 
 
 //Error handling
