@@ -9,6 +9,7 @@ let express = require('express');
 let Usermodel = require('../models/user');
 let Users = Usermodel.User; 
 
+
 //Getting the Tutor Page
 getTutor = (req, res, next) => {
     
@@ -81,15 +82,35 @@ insertMeeting= (req, res) => {
         console.log('Unknown user');
         return res.render('index', {messages: ''});
     }
+    console.log(req.body);
     
-    console.log(req.body.meeting);
+    let tutorname = req.body.tutors;
+    let course = req.body.coursename; 
+    let name = req.body.meetingtitle;
+    let description = req.body.meetinglink;
+    let time = req.body.appt; 
+
+   
     var ObjectId = require('mongodb').ObjectId;
+    
+    console.log(tutorname);
+    console.log(course);
+    console.log(name);
+    console.log(description);
+    console.log(time);
     
     let query = {_id: ObjectId(user_id)};  // <-- find stage
 
+    let newmeetingobj = {
+        tutorname: tutorname,
+        course: course,
+        name: name,
+        description: description,
+        time: time
+    };
 
     let update = { $push: {    // <-- set stage
-        "Meeting": req.body.meeting
+        "Meeting": newmeetingobj
       }};
 
     let options = {

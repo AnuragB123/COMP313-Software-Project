@@ -11,7 +11,7 @@ const meetingSchema = new mongoose.Schema({
   course: {type: String, required: "course is required"}, 
   name : {type: String,required: "Meeting name is required"},
   description : {type: String,required: "description is required"},
-  time: { type: Date, required: "time is required"}
+  time: { type: String, required: "time is required"}
 });
 
 
